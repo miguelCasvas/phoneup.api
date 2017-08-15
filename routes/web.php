@@ -19,8 +19,8 @@ Auth::routes();
 
 Route::get('/redirect', function () {
     $query = http_build_query([
-        'client_id' => '3',
-        //'redirect_uri' => 'http://phoneup.client.dev/',
+        'client_id' => 6,
+        'redirect_uri' => 'http://phoneup.client.dev/callback',
         'response_type' => 'code',
         'scope' => '',
     ]);
