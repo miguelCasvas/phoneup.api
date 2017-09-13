@@ -14,12 +14,10 @@ class UserController extends Controller
 
     private $modelUser = User::class;
 
-
     function __construct()
     {
         $this->modelUser = new User();
     }
-
 
     public function store(Request $request, $idUsuario = null)
     {
@@ -79,7 +77,38 @@ class UserController extends Controller
         return $response;
     }
 
+    /**
+     * @param $filtros
+     *
+     * @return mixed
+     */
+    public function busquedaRegistro($filtros)
+    {
+        return $this->modelUser->where($filtros);
+    }
+    
+    /**
+     * @param $contrasenia
+     * @param $confirmarContrasenia
+     * @return bool
+     */
     public function validarContrasenia ($contrasenia, $confirmarContrasenia){
         return ($contrasenia != $confirmarContrasenia);
+    }
+
+    /**
+     * Eliminacion de registro por id modelo usuarios
+     *
+     * @param $id
+     */
+    public function eliminacionPorIdUsuario($idUsuario)
+    {
+        $this->modelUser = $this->modelUser->where('id_usuario',$idUsuario)->first();
+
+        if ($this->modelUser != null){
+            $response = response()->json([  'data'=> ['id_user'=> $this->modelUser->id, 'id_usuario' => $idUsuario ]]);
+            $this->modelUser->delete();
+            $this->CreateRegisterLog($response);
+        }
     }
 }

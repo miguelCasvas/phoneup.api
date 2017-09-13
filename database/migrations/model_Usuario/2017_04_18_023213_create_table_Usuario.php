@@ -14,15 +14,15 @@ class CreateTableUsuario extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->increments('id_usuario');
-            $table->string('nombre_usuario', 200);
+            $table->string('nombres', 200);
             $table->string('apellidos',200);
-            $table->string('email', 200);
+            $table->string('email', 200)->nullable();
             $table->string('identificacion', 50);
-            $table->timestamp('fecha_nacimiento');
+            $table->timestamp('fecha_nacimiento')->nullable();
+            $table->timestamps();
             # FK
-            $table->integer('id_role')->unsigned();
+            $table->integer('id_rol')->unsigned();
             $table->integer('id_conjunto')->unsigned();
-            $table->integer('id_canal')->unsigned();
         });
     }
 

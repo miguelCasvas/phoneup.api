@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndexLogin extends Migration
+class CreateIndexConjuntos extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,8 @@ class CreateIndexLogin extends Migration
      */
     public function up()
     {
-        Schema::table('login', function(Blueprint $table){
-            $table->index('id_usuario','index_Login_Usuario');
+        Schema::table('conjuntos', function (Blueprint $table) {
+            $table->index('id_ciudad', 'IXFK_Conjunto_Ciudad');
         });
     }
 
@@ -24,8 +25,8 @@ class CreateIndexLogin extends Migration
      */
     public function down()
     {
-        Schema::table('login', function(Blueprint $table){
-            $table->dropIndex('index_Login_Usuario');
+        Schema::table('conjuntos', function (Blueprint $table) {
+            $table->dropIndex('IXFK_Conjunto_Ciudad');
         });
     }
 }

@@ -12,9 +12,14 @@ class CreateTableUsuarioExt extends Migration
      */
     public function up()
     {
-        Schema::create('usuario_ext', function (Blueprint $table) {
-            $table->increments('id_extension');
+        Schema::create('usuario_extensiones', function (Blueprint $table) {
+            $table->increments('id_usuario_extension');
+
+            # Fk
+            $table->integer('id_extension')->unsigned();
             $table->integer('id_usuario')->unsigned();
+
+            $table->timestamps();
         });
     }
 
@@ -25,6 +30,6 @@ class CreateTableUsuarioExt extends Migration
      */
     public function down()
     {
-        Schema::drop('usuario_ext');
+        Schema::drop('usuario_extensiones');
     }
 }

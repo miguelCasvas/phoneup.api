@@ -12,9 +12,10 @@ class CreateTableUbicacionCatalogo extends Migration
      */
     public function up()
     {
-        Schema::create('ubicacion_catalogo', function (Blueprint $table) {
-            $table->increments('id_ubicacioncatalogo');
-            $table->string('nombre_ubicacioncatalogo', 200);
+        Schema::create('ubicacion_catalogos', function (Blueprint $table) {
+            $table->increments('id_ubicacion_catalogo');
+            $table->string('nombre_ubicacion_catalogo', 200);
+            $table->timestamps();
 
             # Fk
             $table->integer('id_catalogo')->unsigned();
@@ -29,6 +30,6 @@ class CreateTableUbicacionCatalogo extends Migration
      */
     public function down()
     {
-        Schema::drop('ubicacion_catalogo');
+        Schema::drop('ubicacion_catalogos');
     }
 }

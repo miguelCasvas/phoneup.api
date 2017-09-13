@@ -7,10 +7,10 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class Log extends Model
 {
-    protected $table = "log";
-    protected $primaryKey = "id_log";
-    public $timestamps = false;
+    protected $table = "logs";
 
-    protected $fillable = ["ip", "end_point", "accion", "request", "log", "id_usuario", "id_client"];
+    protected $primaryKey = "id_log";
+
+    protected $fillable = ["end_point", "accion", "request", "log", "id_usuario", "id_cliente"];
 
 }

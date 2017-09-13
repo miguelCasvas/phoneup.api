@@ -15,8 +15,8 @@ class CreateTableModulos extends Migration
         Schema::create('modulos', function (Blueprint $table) {
             $table->increments('id_modulo');
             $table->string('nombre_modulo',200);
-            # FK
-            $table->integer('id_estado')->unsigned();
+            $table->timestamps();
+
         });
     }
 

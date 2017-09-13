@@ -12,9 +12,13 @@ class CreateTableCatalogo extends Migration
      */
     public function up()
     {
-        Schema::create('catalogo', function (Blueprint $table) {
+        Schema::create('catalogos', function (Blueprint $table) {
             $table->increments('id_catalogo');
-            $table->string('nombre_Catalogo', 200)->nullable();
+            $table->string('nombre_catalogo', 200);
+
+            $table->timestamps();
+
+            # FK
             $table->integer('id_conjunto')->unsigned();
         });
     }
@@ -26,6 +30,6 @@ class CreateTableCatalogo extends Migration
      */
     public function down()
     {
-        Schema::drop('catalogo');
+        Schema::drop('catalogos');
     }
 }

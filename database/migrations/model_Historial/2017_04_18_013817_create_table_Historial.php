@@ -12,10 +12,11 @@ class CreateTableHistorial extends Migration
      */
     public function up()
     {
-        Schema::create('historial', function (Blueprint $table) {
+        Schema::create('historiales', function (Blueprint $table) {
             $table->increments('id_historial');
             $table->string('accion', 400);
             $table->timestamp('fecha_hora')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
 
             # FK
             $table->integer('id_usuario')->unsigned();
@@ -31,6 +32,6 @@ class CreateTableHistorial extends Migration
      */
     public function down()
     {
-        Schema::drop('historial');
+        Schema::drop('historiales');
     }
 }

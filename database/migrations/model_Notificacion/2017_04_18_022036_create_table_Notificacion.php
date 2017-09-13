@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndexModulos extends Migration
+class CreateTableNotificacion extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,11 @@ class CreateIndexModulos extends Migration
      */
     public function up()
     {
-        Schema::table('modulos', function(Blueprint $table){
-            $table->index('id_estado','index_Modulos_Estados');
+        Schema::create('notificaciones', function (Blueprint $table) {
+            $table->increments('id_notificacion');
+            $table->string('mensaje', 4000);
+            $table->timestamps();
+
         });
     }
 
@@ -24,8 +27,6 @@ class CreateIndexModulos extends Migration
      */
     public function down()
     {
-        Schema::table('modulos', function(Blueprint $table){
-            $table->dropIndex('index_Modulos_Estados');
-        });
+        Schema::drop('notificaciones');
     }
 }

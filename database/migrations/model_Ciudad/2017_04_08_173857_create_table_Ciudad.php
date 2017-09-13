@@ -12,9 +12,10 @@ class CreateTableCiudad extends Migration
      */
     public function up()
     {
-        Schema::create('ciudad', function (Blueprint $table) {
+        Schema::create('ciudades', function (Blueprint $table) {
             $table->increments('id_ciudad');
-            $table->string('nombre_Ciudad',200);
+            $table->string('nombre_ciudad',200);
+            $table->timestamps();
         });
     }
 
@@ -25,6 +26,6 @@ class CreateTableCiudad extends Migration
      */
     public function down()
     {
-        Schema::drop('ciudad');
+        Schema::drop('ciudades');
     }
 }

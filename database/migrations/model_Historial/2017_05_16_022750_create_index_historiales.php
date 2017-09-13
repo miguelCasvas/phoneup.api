@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndexHistorial extends Migration
+class CreateIndexHistoriales extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,8 @@ class CreateIndexHistorial extends Migration
      */
     public function up()
     {
-        Schema::table('historial',function(Blueprint $table){
-            $table->index('id_usuario','index_Historial_Usuario');
+        Schema::table('historiales', function (Blueprint $table) {
+            $table->index('id_usuario', 'IXFK_Historial_Usuario');
         });
     }
 
@@ -24,8 +25,8 @@ class CreateIndexHistorial extends Migration
      */
     public function down()
     {
-        Schema::table('historial', function(Blueprint $table){
-           $table->dropIndex('index_Historial_Usuario');
+        Schema::table('historiales', function (Blueprint $table) {
+            //
         });
     }
 }

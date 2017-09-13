@@ -41,7 +41,7 @@ class LoginController extends Controller
             $response = response()->json(['success' => 'OK']);
         }
 
-        $this->CreateRegisterLog($response);
+        //$this->CreateRegisterLog($response);
         return $response;
     }
 
