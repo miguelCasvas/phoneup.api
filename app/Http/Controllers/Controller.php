@@ -20,11 +20,12 @@ class Controller extends BaseController
 
     protected function  setMiUsuario()
     {
-        if (Authorizer::getResourceOwnerId() != null){
+        //if (Authorizer::getResourceOwnerId() != null){
             $objUser = new \App\User();
             $this->miUsuario =
-                $objUser->miUsuario(Authorizer::getResourceOwnerId());
-        }
+                //$objUser->miUsuario(Authorizer::getResourceOwnerId());
+                $objUser->miUsuario(\Auth::user()->id);
+        //}
 
         return $this;
     }

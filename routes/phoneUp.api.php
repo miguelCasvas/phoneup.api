@@ -5,7 +5,9 @@ Route::group(['prefix'=>'','before' => ''], function()
 
     # USUARIO
     Route::resource('usuarios', 'usuarioController');
-    Route::get('miusuario','usuarioController@getMiUsuario');
+
+    Route::get('miusuario','usuarioController@getMiUsuario')->middleware('auth:api');
+
     Route::put('edicionmiusuario/{idUser}','usuarioController@edicionMiUsuario');
 
     # EXTENSION DE USUARIO

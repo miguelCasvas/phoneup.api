@@ -184,10 +184,11 @@ class usuarioController extends Controller
     public function getMiUsuario()
     {
         # Validar permisos
-        //$this->validarPermisos($this->modelUsuario->getTable(), 2);
-        //$this->setMiUsuario();
-        //$response = \response()->json(['data' => $this->miUsuario]);
-        $response = \response()->json(['data' => 'hola que hace']);
+        $this->validarPermisos($this->modelUsuario->getTable(), 2);
+
+
+        $this->setMiUsuario();
+        $response = \response()->json(['data' => $this->miUsuario]);
 
         return $response;
     }
