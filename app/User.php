@@ -83,6 +83,8 @@ class User extends Authenticatable
             ->leftJoin('modelos','modelos.id_modelo','=','permisos_por_rol.id_modelo')
             # Campos a retornar
             ->select(
+                'users.id',
+                'users.password',
             # Info. usuarios
                 'usuarios.id_usuario',
                 'usuarios.nombres',
@@ -118,6 +120,7 @@ class User extends Authenticatable
         $miUsuario = new Collection();
 
         $miUsuario->put('id_usuario', $miUsuarioQuery->first()->id_usuario);
+        $miUsuario->put('password', $miUsuarioQuery->first()->password);
         $miUsuario->put('nombres', $miUsuarioQuery->first()->nombres);
         $miUsuario->put('apellidos', $miUsuarioQuery->first()->apellidos);
         $miUsuario->put('email', $miUsuarioQuery->first()->email);
