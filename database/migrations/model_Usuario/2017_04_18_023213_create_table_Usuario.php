@@ -18,7 +18,7 @@ class CreateTableUsuario extends Migration
             $table->string('apellidos',200);
             $table->string('email', 200)->nullable();
             $table->string('identificacion', 50);
-            $table->timestamp('fecha_nacimiento')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
             $table->timestamps();
             # FK
             $table->integer('id_rol')->unsigned();

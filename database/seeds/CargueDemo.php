@@ -265,11 +265,9 @@ class CargueDemo extends Seeder
             'id_usuario' => 3
         ]);
 
-        # CARGUE CLIENTE
-        /*\DB::table('oauth_clients')->insert([
-            'id' => 'f3d259ddd3ed8ff3843839b',
-            'secret' => '4c7f6f8fa93d59c45502c0ae8c4a95b',
-            'name' => 'Main website'
-        ]);*/
     }
 }
+
+## COMANDOS
+##  php artisan migrate:reset && php artisan migrate && php artisan db:seed --class=CargueDemo
+##
