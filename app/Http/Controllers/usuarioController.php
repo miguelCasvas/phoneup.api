@@ -198,7 +198,7 @@ class usuarioController extends Controller
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 3);
 
-        if ($id != Authorizer::getResourceOwnerId())
+        if ($id != \Auth::user()->id)
             abort(400, trans('errors.902'));
 
         return $this->update($request, $id);

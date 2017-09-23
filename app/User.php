@@ -127,6 +127,7 @@ class User extends Authenticatable
         $miUsuario->put('identificacion', $miUsuarioQuery->first()->identificacion);
         $miUsuario->put('fecha_nacimiento', $miUsuarioQuery->first()->fecha_nacimiento);
         $miUsuario->put('id_rol', $miUsuarioQuery->first()->id_rol);
+        $miUsuario->put('nombre_rol', $miUsuarioQuery->first()->nombre_rol);
 
         # Extensiones
         $miUsuario->put('extensiones', new Collection());
@@ -144,6 +145,7 @@ class User extends Authenticatable
             if ($register->id_extension != null){
                 $extension['id_usuario_extension'] = $register->id_usuario_extension;
                 $extension['id_extension'] = $register->id_extension;
+                $extension['extension'] = $register->extension;
 
                 $miUsuario->get('extensiones')->put($register->id_extension, $extension);
             }
