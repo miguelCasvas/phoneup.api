@@ -73,7 +73,6 @@ class usuarioController extends Controller
     /**
      * Busqueda de usuario por id
      *
-     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -202,5 +201,13 @@ class usuarioController extends Controller
             abort(400, trans('errors.902'));
 
         return $this->update($request, $id);
+    }
+
+    /**
+     * 
+     */
+    public function listadoUsuarios()
+    {
+
     }
 }
