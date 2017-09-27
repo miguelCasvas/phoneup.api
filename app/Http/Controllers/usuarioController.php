@@ -6,6 +6,7 @@ use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Usuario\StoreRequest;
 use App\Http\Requests\Usuario\UpdateRequest;
 use App\Models\Usuario;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
@@ -21,6 +22,11 @@ class usuarioController extends Controller
     private $modelUsuario = Usuario::class;
 
     /**
+     * @var User
+     */
+    private $modelUser = User::class;
+
+    /**
      * @var UserController
      */
     private $userController;
@@ -28,6 +34,7 @@ class usuarioController extends Controller
     function __construct(){
 
         $this->modelUsuario = new Usuario();
+        $this->modelUser = new User();
         $this->userController = new UserController();
     }
 
@@ -98,12 +105,12 @@ class usuarioController extends Controller
     {
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 2);
-        $busqueda = $this->modelUsuario->getFiltrado($this->miUsuario->get('id_rol'), $id);
+        $busqueda = $this->modelUser->infoGlobalUsuario($id);
 
         if ($busqueda == null)
             $data = ['data' => ''];
         else
-            $data = ['data' => $busqueda->first()];
+            $data = ['data' => $busqueda];
 
 
         $response = response()->json($data);
@@ -111,7 +118,6 @@ class usuarioController extends Controller
         $this->CreateRegisterLog($response);
         return $response;
     }
-
 
     private function updateModelUser(Request $request, $id)
     {
@@ -129,7 +135,6 @@ class usuarioController extends Controller
 
         return $response;
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -199,11 +204,4 @@ class usuarioController extends Controller
             $this->updateModelUser($request, $id);
     }
 
-    /**
-     * 
-     */
-    public function listadoUsuarios()
-    {
-
-    }
 }

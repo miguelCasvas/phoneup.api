@@ -22,6 +22,12 @@ class Usuario extends Model
         return $this->hasMany(\App\Models\CanalComunicacion::class, 'id_usuario', 'id_usuario');
     }
 
+    /**
+     * @param      $idRol
+     * @param null $id
+     *
+     * @return $this|array|\Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     */
     public function getFiltrado($idRol,$id=null)
     {
         $dataR = [];
