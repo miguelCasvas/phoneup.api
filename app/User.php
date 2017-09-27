@@ -68,7 +68,7 @@ class User extends Authenticatable
         $miUsuarioQuery = \DB::table('users')
             ->join('usuarios','users.id_usuario','=','usuarios.id_usuario')
             # LeftJoin [usuarios -- usuario_extensiones]
-            ->leftJoin('usuario_extensiones','usuario_extensiones.id_usuario_extension','=','usuarios.id_usuario')
+            ->leftJoin('usuario_extensiones','usuario_extensiones.id_usuario','=','usuarios.id_usuario')
             # LeftJoin [usuario_extensiones -- extensiones]
             ->leftJoin('extensiones','usuario_extensiones.id_extension','=','extensiones.id_extension')
             # leftJoin [conjuntos - extensiones]

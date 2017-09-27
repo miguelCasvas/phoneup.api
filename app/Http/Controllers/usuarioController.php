@@ -112,34 +112,10 @@ class usuarioController extends Controller
         return $response;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRequest $request, $id)
+
+    private function updateModelUser(Request $request, $id)
     {
-        # Validar permisos
-        $response = null;
-        $this->validarPermisos($this->modelUsuario->getTable(), 3);
-
-        $idRol = $this->miUsuario->get('id_rol');
-
-        if ($idRol == 1){
-            $this->modelUsuario = $this->modelUsuario->find($id);
-        }
-        else{
-            $this->modelUsuario = $this->modelUsuario->find($id);
-            $idRolUsuarioEditar = $this->modelUsuario->id_rol;
-
-            if ($idRolUsuarioEditar == 1)
-                abort(400, trans('errors.902'));
-        }
-
-        if ($this->modelUsuario == null)
-            abort(400, trans('errors.901'));
+        $this->modelUsuario = $this->modelUsuario->find($id);
 
         $this->modelUsuario->nombres            = $request->get('nombres');
         $this->modelUsuario->apellidos          = $request->get('apellidos');
@@ -152,6 +128,25 @@ class usuarioController extends Controller
         $this->CreateRegisterLog($response);
 
         return $response;
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequest $request, $id)
+    {
+        # Validar permisos
+        $response = null;
+        $this->validarPermisos($this->modelUsuario->getTable(), 3);
+        $this->modelUsuario = $this->modelUsuario->find($id);
+
+        return
+            $this->updateModelUser($request, $id);
     }
 
     /**
@@ -183,7 +178,7 @@ class usuarioController extends Controller
     public function getMiUsuario()
     {
         # Validar permisos
-        $this->validarPermisos($this->modelUsuario->getTable(), 2);
+        $this->validarPermisos($this->modelUsuario->getTable(), 5);
 
 
         $this->setMiUsuario();
@@ -195,12 +190,13 @@ class usuarioController extends Controller
     public function edicionMiUsuario(UpdateRequest $request, $id)
     {
         # Validar permisos
-        $this->validarPermisos($this->modelUsuario->getTable(), 3);
+        $this->validarPermisos($this->modelUsuario->getTable(), 6);
 
         if ($id != \Auth::user()->id)
             abort(400, trans('errors.902'));
 
-        return $this->update($request, $id);
+        return
+            $this->updateModelUser($request, $id);
     }
 
     /**
