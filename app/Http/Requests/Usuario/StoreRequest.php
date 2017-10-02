@@ -20,7 +20,6 @@ class StoreRequest extends FormRequestToAPI
             'identificacion' => ['required', 'min:7'],
             'nombres' => ['required'],
             'apellidos' => ['required'],
-            'userName' => ['required'],
             'correo' => ['required', 'email'],
             'contrasenia' => ['required', 'confirmed'],
             'idRol' => ['required', 'numeric', 'exists:roles,id_rol'],

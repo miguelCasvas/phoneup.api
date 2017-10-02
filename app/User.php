@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -87,7 +88,7 @@ class User extends Authenticatable
             ->leftJoin('modelos','modelos.id_modelo','=','permisos_por_rol.id_modelo')
             # Campos a retornar
             ->select(
-                'users.id',
+                'users.id As id_user',
                 'users.password',
                 # Info. usuarios
                 'usuarios.id_usuario',
@@ -134,6 +135,7 @@ class User extends Authenticatable
 
         $infoUsuario = new Collection();
 
+        $infoUsuario->put('id_user', $infoUsuarioQuery->first()->id_user);
         $infoUsuario->put('id_usuario', $infoUsuarioQuery->first()->id_usuario);
         $infoUsuario->put('password', $infoUsuarioQuery->first()->password);
         $infoUsuario->put('nombres', $infoUsuarioQuery->first()->nombres);

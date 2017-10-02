@@ -6,7 +6,6 @@ use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class UserController extends Controller
 {
@@ -22,7 +21,7 @@ class UserController extends Controller
     public function store(Request $request, $idUsuario = null)
     {
 
-        $this->modelUser->name = $request->get('userName');
+        $this->modelUser->name = $request->get('nombres');
         $this->modelUser->email = $request->get('correo');
         $this->modelUser->password = $request->get('contrasenia');
         $this->modelUser->is_estado_contrasenia = 1;
@@ -33,22 +32,22 @@ class UserController extends Controller
         return $this->modelUser;
     }
 
-    public function validarLogin(Request $request)
-    {
-
-        $response = Response::json(Authorizer::issueAccessToken());
-
-        if($response->error == "invalid_credentials"){
-            $this->modelUser = $this->modelUser->busquedaPorEmail($response->get('username'));
-
-            if ($this->modelUser != false){
-                $this->modelUser->errorContrasenia();
-            }
-
-        }
-
-        return $response;
-    }
+//    public function validarLogin(Request $request)
+//    {
+//
+//        $response = Response::json(Authorizer::issueAccessToken());
+//
+//        if($response->error == "invalid_credentials"){
+//            $this->modelUser = $this->modelUser->busquedaPorEmail($response->get('username'));
+//
+//            if ($this->modelUser != false){
+//                $this->modelUser->errorContrasenia();
+//            }
+//
+//        }
+//
+//        return $response;
+//    }
 
     /**
      * @param Request $request
@@ -60,7 +59,7 @@ class UserController extends Controller
         $contrasenia = trim($request->get('contrasenia'));
         $confirmarContrasenia = trim($request->get('confirmarContrasenia'));
 
-        $idUser = Authorizer::getResourceOwnerId();
+        $idUser = \Auth::user()->id;
         $this->modelUser = $this->modelUser->find($idUser);
 
         if ( empty($contrasenia) && ($this->validarContrasenia($contrasenia ,$confirmarContrasenia))){

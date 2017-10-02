@@ -3,7 +3,7 @@
 Route::group(['middleware' => 'auth:api'], function()
 {
 
-    # USUARIO
+    # USUARIO Y
     Route::resource('usuarios', 'usuarioController');
 
     Route::get('miusuario','usuarioController@getMiUsuario');
