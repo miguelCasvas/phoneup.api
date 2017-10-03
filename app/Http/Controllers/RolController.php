@@ -12,12 +12,12 @@ class RolController extends Controller
     //
     use CreateRegisterLog;
     private $modelRol = Rol::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelRol = new Rol();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
 

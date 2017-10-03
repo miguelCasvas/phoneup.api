@@ -21,8 +21,8 @@ class UpdateRequest extends FormRequestToAPI
             'nombres' => ['required'],
             'apellidos' => ['required'],
             'correo' => ['required', 'email'],
+            'password' => ['confirmed'],
             'idRol' => ['required', 'numeric', 'exists:roles,id_rol'],
-            'idConjunto' => ['required', 'numeric','exists:conjuntos,id_conjunto'],
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class Controller extends BaseController
 {
@@ -20,9 +20,9 @@ class Controller extends BaseController
 
     protected function  setMiUsuario()
     {
-        $objUser = new \App\User();
-        $this->miUsuario =
-            $objUser->infoGlobalUsuario(\Auth::user()->id);
+
+        $objUser = new Usuario();
+        $this->miUsuario = $objUser->infoGlobalUsuario(\Auth::user()->id_usuario);
 
         return $this;
     }

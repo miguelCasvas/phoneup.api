@@ -6,10 +6,8 @@ use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Usuario\StoreRequest;
 use App\Http\Requests\Usuario\UpdateRequest;
 use App\Models\Usuario;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class usuarioController extends Controller
 {
@@ -21,21 +19,8 @@ class usuarioController extends Controller
      */
     private $modelUsuario = Usuario::class;
 
-    /**
-     * @var User
-     */
-    private $modelUser = User::class;
-
-    /**
-     * @var UserController
-     */
-    private $userController;
-
     function __construct(){
-
         $this->modelUsuario = new Usuario();
-        $this->modelUser = new User();
-        $this->userController = new UserController();
     }
 
     /**
@@ -49,15 +34,6 @@ class usuarioController extends Controller
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 1);
 
-        # Validar que el registro no se encuentre en el sistema
-        $busquedaRegistroUser =
-            $this->userController->busquedaRegistro([
-                ['email','=', $request->get('correo')]
-            ])->first();
-
-        if ($busquedaRegistroUser != null)
-            abort(400,trans('errors.903'));
-
         $this->modelUsuario->nombres            = $request->get('nombres');
         $this->modelUsuario->apellidos          = $request->get('apellidos');
         $this->modelUsuario->identificacion     = $request->get('identificacion');
@@ -67,8 +43,6 @@ class usuarioController extends Controller
         $this->modelUsuario->id_conjunto        = $request->get('idConjunto');
         $this->modelUsuario->save();
 
-        # Creacion en modelo de user
-        $this->userController->store($request, $this->modelUsuario->id_usuario);
         $response = response()->json($this->modelUsuario);
 
         # Creacion en modelo log
@@ -105,7 +79,7 @@ class usuarioController extends Controller
     {
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 2);
-        $busqueda = $this->modelUser->infoGlobalUsuario($id);
+        $busqueda = $this->modelUsuario->infoGlobalUsuario($id);
 
         if ($busqueda == null)
             $data = ['data' => ''];
@@ -119,7 +93,7 @@ class usuarioController extends Controller
         return $response;
     }
 
-    private function updateModelUser(Request $request, $id)
+    private function updateModelUsuario(Request $request, $id)
     {
         $this->modelUsuario = $this->modelUsuario->find($id);
 
@@ -128,6 +102,11 @@ class usuarioController extends Controller
         $this->modelUsuario->email              = $request->get('correo');
         $this->modelUsuario->identificacion     = $request->get('identificacion');
         $this->modelUsuario->fecha_nacimiento   = $request->get('fechaNacimiento');
+        $this->modelUsuario->id_rol             = $request->get('idRol');
+
+        if (empty($request->get('password')) == false)
+            $this->modelUsuario->password = $request->get('password');
+
         $this->modelUsuario->save();
 
         $response = response()->json($this->modelUsuario);
@@ -148,10 +127,9 @@ class usuarioController extends Controller
         # Validar permisos
         $response = null;
         $this->validarPermisos($this->modelUsuario->getTable(), 3);
-        $this->modelUsuario = $this->modelUsuario->find($id);
 
         return
-            $this->updateModelUser($request, $id);
+            $this->updateModelUsuario($request, $id);
     }
 
     /**
@@ -171,7 +149,6 @@ class usuarioController extends Controller
             abort(400, trans('errors.901'));
         }
 
-        $this->userController->eliminacionPorIdUsuario($id);
         $this->modelUsuario->delete();
 
         $response = response()->json([  'data'=> ['id'=> $id ]]);
@@ -185,7 +162,6 @@ class usuarioController extends Controller
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 5);
 
-
         $this->setMiUsuario();
         $response = \response()->json(['data' => $this->miUsuario]);
 
@@ -197,11 +173,11 @@ class usuarioController extends Controller
         # Validar permisos
         $this->validarPermisos($this->modelUsuario->getTable(), 6);
 
-        if ($id != \Auth::user()->id)
+        if ($id != \Auth::user()->id_usuario)
             abort(400, trans('errors.902'));
 
         return
-            $this->updateModelUser($request, $id);
+            $this->updateModelUsuario($request, $id);
     }
 
 }
