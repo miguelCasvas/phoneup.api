@@ -11,12 +11,12 @@ class ExtensionController extends Controller
 {
     use CreateRegisterLog;
     private $modelExtension = Extension::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelExtension  = new Extension();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**
@@ -39,7 +39,6 @@ class ExtensionController extends Controller
 
         return $response;
     }
-
 
     /**
      * Display the specified resource.
@@ -118,5 +117,17 @@ class ExtensionController extends Controller
         }
         $this->CreateRegisterLog($response);
         return $response;
+    }
+
+    /**
+     * Retorna las extensiones activas para un conjunto
+     * @param $idConjunto
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function extensionesPorConjunto($idConjunto)
+    {
+        $this->validarPermisos($this->modelExtension->getTable(), 2);
+        $data = $this->modelExtension->queryExtensionPorConjunto($idConjunto)->get();
+        return response()->json([ "data"=> $data ]);
     }
 }

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     # EXTENSIONES
     Route::resource('extension', 'ExtensionController');
+    Route::get('extensiones/conjunto/{idConjunto}', 'ExtensionController@extensionesPorConjunto');
 
     # CANAL DE COMUNICACION
     Route::resource('canalcomunicacion', 'CanalComunicacionController');

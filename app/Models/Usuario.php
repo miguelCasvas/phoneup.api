@@ -66,56 +66,65 @@ class Usuario extends Authenticatable
     private function queryInfoUsuario($idUser)
     {
 
-        $infoUsuarioQuery = \DB::table('usuarios')
-            # LeftJoin [usuarios -- usuario_extensiones]
-            ->leftJoin('usuario_extensiones','usuario_extensiones.id_usuario','=','usuarios.id_usuario')
-            # LeftJoin [usuario_extensiones -- extensiones]
-            ->leftJoin('extensiones','usuario_extensiones.id_extension','=','extensiones.id_extension')
-            # leftJoin [conjuntos - extensiones]
-            ->leftJoin('conjuntos','extensiones.id_conjunto','=','conjuntos.id_conjunto')
-            # Join [usuarios -- roles]
-            ->join('roles','usuarios.id_rol','=','roles.id_rol')
-            # LeftJoin [roles -- permisos_por_rol]
-            ->leftJoin('permisos_por_rol','permisos_por_rol.id_rol','=','roles.id_rol')
-            # Join [permisos_por_rol -- permisos]
-            ->join('permisos','permisos.id_permiso','=','permisos_por_rol.id_permiso')
-            # Join [permisos_por_rol -- modelo]
-            ->leftJoin('modelos','modelos.id_modelo','=','permisos_por_rol.id_modelo')
-            # Campos a retornar
-            ->select(
-                'usuarios.password',
-                # Info. usuarios
+        $infoUsuarioQuery = $this->select(
                 'usuarios.id_usuario',
                 'usuarios.nombres',
                 'usuarios.apellidos',
                 'usuarios.email',
                 'usuarios.identificacion',
                 'usuarios.fecha_nacimiento',
-                # Info. usuario_extensiones
-                'usuario_extensiones.id_usuario_extension',
-                # Info extensiones
-                'extensiones.id_extension',
-                'extensiones.extension',
-                # Info conjuntos
-                'conjuntos.id_conjunto',
-                'conjuntos.nombre_conjunto',
-                'conjuntos.direccion',
-                'conjuntos.telefono',
-                # Info. permisos_por_rol
-                'permisos_por_rol.id_permisos_por_rol',
-                # Info. roles
                 'roles.id_rol',
-                'roles.nombre_rol',
-                # Info. permisos
-                'permisos.id_permiso',
-                'permisos.nombre_permiso',
-                # Info modelos
-                'modelos.id_modelo',
-                'modelos.nombre_modelo'
+                'roles.nombre_rol'
             )
+            ->join('roles', 'usuarios.id_rol', '=', 'roles.id_rol')
             ->where('usuarios.id_usuario', '=', $idUser);
 
-        return $infoUsuarioQuery;
+        $idUsuario = $infoUsuarioQuery->first()->id_usuario;
+        $idRol = $infoUsuarioQuery->first()->id_rol;
+
+        # Consulta de extensiones relacionadas al (usuario - conjuntos)
+        $infoExtensionesQuery =
+            \DB::table('usuario_extensiones')
+                ->select(
+                    'usuario_extensiones.id_usuario_extension',
+                    'extensiones.id_extension',
+                    'extensiones.extension',
+                    'conjuntos.id_conjunto',
+                    'conjuntos.nombre_conjunto',
+                    'conjuntos.direccion',
+                    'conjuntos.email',
+                    'conjuntos.telefono'
+                )
+                ->join('extensiones', 'usuario_extensiones.id_extension', '=', 'extensiones.id_extension')
+                ->join('conjuntos', 'extensiones.id_conjunto', '=', 'conjuntos.id_conjunto')
+                ->where('usuario_extensiones.id_usuario', $idUsuario);
+
+        # Consulta de permisos del usuario
+
+        $infoPermisosQuery =
+            \DB::table('permisos_por_rol')
+                ->select(
+                    'permisos_por_rol.id_permisos_por_rol',
+                    'roles.id_rol',
+                    'roles.nombre_rol',
+                    'permisos.id_permiso',
+                    'permisos.nombre_permiso',
+                    'modelos.id_modelo',
+                    'modelos.nombre_modelo'
+                )
+                ->join('permisos', 'permisos_por_rol.id_permiso', '=', 'permisos.id_permiso')
+                ->join('roles', 'permisos_por_rol.id_rol', '=', 'roles.id_rol')
+                ->join('modelos', 'permisos_por_rol.id_modelo', '=', 'modelos.id_modelo')
+                ->where('permisos_por_rol.id_rol', $idRol);
+
+        return $collectionQuerys =
+            collect(
+                [
+                    'usuarios' => $infoUsuarioQuery,
+                    'extensiones' => $infoExtensionesQuery,
+                    'permisos' => $infoPermisosQuery
+                ]
+            );
     }
 
     /**
@@ -124,67 +133,55 @@ class Usuario extends Authenticatable
      */
     public function infoGlobalUsuario($idUser)
     {
-        $infoUsuarioQuery = $this->queryInfoUsuario($idUser)->get();
-        //dd($infoUsuarioQuery->toSql());
+        $infoUsuarioQueries = $this->queryInfoUsuario($idUser);
+
+        $usuario = $infoUsuarioQueries->get('usuarios');
+        $extensiones = $infoUsuarioQueries->get('extensiones')->get();
+        $permisos = $infoUsuarioQueries->get('permisos')->get();
 
         $infoUsuario = new Collection();
 
-        $infoUsuario->put('id_usuario', $infoUsuarioQuery->first()->id_usuario);
-        $infoUsuario->put('password', $infoUsuarioQuery->first()->password);
-        $infoUsuario->put('nombres', $infoUsuarioQuery->first()->nombres);
-        $infoUsuario->put('apellidos', $infoUsuarioQuery->first()->apellidos);
-        $infoUsuario->put('email', $infoUsuarioQuery->first()->email);
-        $infoUsuario->put('identificacion', $infoUsuarioQuery->first()->identificacion);
-        $infoUsuario->put('fecha_nacimiento', $infoUsuarioQuery->first()->fecha_nacimiento);
-        $infoUsuario->put('id_rol', $infoUsuarioQuery->first()->id_rol);
-        $infoUsuario->put('nombre_rol', $infoUsuarioQuery->first()->nombre_rol);
+        $infoUsuario->put('id_usuario', $usuario->first()->id_usuario);
+        $infoUsuario->put('nombres', $usuario->first()->nombres);
+        $infoUsuario->put('apellidos', $usuario->first()->apellidos);
+        $infoUsuario->put('email', $usuario->first()->email);
+        $infoUsuario->put('identificacion', $usuario->first()->identificacion);
+        $infoUsuario->put('fecha_nacimiento', $usuario->first()->fecha_nacimiento);
+        $infoUsuario->put('id_rol', $usuario->first()->id_rol);
+        $infoUsuario->put('nombre_rol', $usuario->first()->nombre_rol);
 
         # Extensiones
         $infoUsuario->put('extensiones', new Collection());
-        # Conjunto
-        $infoUsuario->put('id_conjunto', $infoUsuarioQuery->first()->id_conjunto);
-        $infoUsuario->put('nombre_conjunto', $infoUsuarioQuery->first()->nombre_conjunto);
-        $infoUsuario->put('direccion', $infoUsuarioQuery->first()->direccion);
-        $infoUsuario->put('telefono', $infoUsuarioQuery->first()->telefono);
+
+        # Adicion de Extensiones
+        $extensiones->each(function ($registro) use(&$infoUsuario){
+
+            $extension['id_usuario_extension'] = $registro->id_usuario_extension;
+            $extension['id_extension'] = $registro->id_extension;
+            $extension['extension'] = $registro->extension;
+            $extension['id_conjunto'] = $registro->id_conjunto;
+            $extension['nombre_conjunto'] = $registro->nombre_conjunto;
+            $extension['direccion'] = $registro->direccion;
+            $extension['email'] = $registro->email;
+            $extension['telefono'] = $registro->telefono;
+            $infoUsuario->get('extensiones')->push($extension);
+        });
+
         # Permisos
         $infoUsuario->put('permisos', new Collection());
 
-        # Adicion de Extensiones
-        $infoUsuarioQuery->each(function ($register) use($infoUsuario){
-
-            if ($register->id_extension != null){
-                $extension['id_usuario_extension'] = $register->id_usuario_extension;
-                $extension['id_extension'] = $register->id_extension;
-                $extension['extension'] = $register->extension;
-
-                $infoUsuario->get('extensiones')->put($register->id_extension, $extension);
-            }
-        });
-
         # Adicion de Permisos
-        $infoUsuarioQuery->each(function ($register) use($infoUsuario){
+        $permisos->each(function ($register) use(&$infoUsuario){
 
-            if ($register->id_permisos_por_rol != null){
+            $permiso['id_permisos_por_rol'] = $register->id_permisos_por_rol;
+            $permiso['id_rol'] = $register->id_rol;
+            $permiso['nombre_rol'] = $register->nombre_rol;
+            $permiso['id_permiso'] = $register->id_permiso;
+            $permiso['nombre_permiso'] = $register->nombre_permiso;
+            $permiso['id_modelo'] = $register->id_modelo;
+            $permiso['nombre_modelo'] = $register->nombre_modelo;
 
-                $permisos = collect([
-                    'id_permisos_por_rol' => $register->id_permisos_por_rol,
-                    'id_rol' => $register->id_rol,
-                    'id_permiso' => $register->id_permiso,
-                    'nombre_permiso' => $register->nombre_permiso,
-                    'id_modelo' => $register->id_modelo,
-                    'nombre_modelo' => $register->nombre_modelo
-                ]);
-
-                $extension['id_permisos_por_rol'] = $register->id_permisos_por_rol;
-                $extension['id_rol'] = $register->id_rol;
-                $extension['nombre_rol'] = $register->nombre_rol;
-                $extension['id_permiso'] = $register->id_permiso;
-                $extension['nombre_permiso'] = $register->nombre_permiso;
-                $extension['id_modelo'] = $register->id_modelo;
-                $extension['nombre_modelo'] = $register->nombre_modelo;
-
-                $infoUsuario->get('permisos')->push($permisos);
-            }
+            $infoUsuario->get('permisos')->push($permiso);
         });
 
         return $infoUsuario;

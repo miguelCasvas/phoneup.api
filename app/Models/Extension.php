@@ -12,4 +12,47 @@ class Extension extends Model
     protected $primaryKey = 'id_extension';
 
     protected $fillable = ['extension', 'id_conjunto', 'id_estado'];
+
+    /**
+     * Busqueda de extensiones activas por conjunto verificando
+     * que extension esta libre y cual no
+     *
+     * @param $idConjunto
+     * @return $this
+     */
+    public function queryExtensionPorConjunto($idConjunto)
+    {
+        $query =
+            $this
+                ->select('extensiones.id_extension', 'extension', 'usuario_extensiones.id_usuario As usuarioAsignado', 'id_conjunto')
+                ->extensionesDisponibles()
+                ->where('id_conjunto', $idConjunto)
+                ->estado();
+
+        return $query;
+    }
+
+    /**
+     * Filtrado de extensiones por estado
+     *
+     * @param $query
+     * @param int $estado [inicializaco en 1 Activo]
+     * @return mixed
+     */
+    public function scopeEstado($query, $estado = 1)
+    {
+        return $query->where('id_estado', $estado);
+    }
+
+    /**
+     * Busqueda relacional con tabla usuario_extensiones
+     * para verificar usuarios con extension asignada
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeExtensionesDisponibles($query)
+    {
+        return $query->leftJoin('usuario_extensiones', 'extensiones.id_extension', '=', 'usuario_extensiones.id_extension');
+    }
 }

@@ -12,13 +12,12 @@ class UsuarioExtensionController extends Controller
 
     use CreateRegisterLog;
     private $modelUsuarioExtensiones = UsuarioExt::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
         $this->modelUsuarioExtensiones = new UsuarioExt();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
-
 
     /**
      * @return \Illuminate\Http\JsonResponse
