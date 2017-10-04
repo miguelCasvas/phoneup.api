@@ -16,9 +16,9 @@ class CreateTableUsuario extends Migration
             $table->increments('id_usuario');
             $table->string('nombres', 200);
             $table->string('apellidos',200);
-            $table->string('email', 200)->nullable();
+            $table->string('email', 200)->nullable()->unique();
             $table->string('password', 255)->nullable();
-            $table->string('identificacion', 50);
+            $table->string('identificacion', 50)->unique();
             $table->date('fecha_nacimiento')->nullable();
             $table->timestamps();
             # FK

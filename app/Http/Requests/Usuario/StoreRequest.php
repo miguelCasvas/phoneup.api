@@ -17,10 +17,10 @@ class StoreRequest extends FormRequestToAPI
     {
         return [
             'fechaNacimiento' => ['required', 'date_format:Y-m-d'],
-            'identificacion' => ['required', 'min:7'],
+            'identificacion' => ['required', 'min:7', 'unique:usuarios'],
             'nombres' => ['required'],
             'apellidos' => ['required'],
-            'correo' => ['required', 'email'],
+            'correo' => ['required', 'email', 'unique:usuarios,email'],
             'contrasenia' => ['required', 'confirmed'],
             'idRol' => ['required', 'numeric', 'exists:roles,id_rol'],
         ];
