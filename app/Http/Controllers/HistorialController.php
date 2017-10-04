@@ -13,12 +13,12 @@ class HistorialController extends Controller
     //
     use CreateRegisterLog;
     private $modelHistorial = Historial::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelHistorial = new Historial();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

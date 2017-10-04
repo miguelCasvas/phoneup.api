@@ -15,12 +15,12 @@ class CatalogoController extends Controller
      * @var Catalogo|string
      */
     private $modelCatalogo = Catalogo::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct()
     {
         $this->modelCatalogo = new Catalogo();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

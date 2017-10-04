@@ -12,12 +12,12 @@ class CiudadController extends Controller
     //
     use CreateRegisterLog;
     private $modelCiudad = Ciudad::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelCiudad = new Ciudad();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

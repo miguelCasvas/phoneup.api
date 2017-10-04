@@ -12,12 +12,12 @@ class TipoSalidaController extends Controller
     //
     use CreateRegisterLog;
     private $modelTiposSalidas = TipoSalida::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelTiposSalidas = new TipoSalida();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

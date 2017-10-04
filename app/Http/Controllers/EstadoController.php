@@ -12,11 +12,11 @@ class EstadoController extends Controller
     //
     use CreateRegisterLog;
     private $modelEstado = Estado::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
         $this->modelEstado = new Estado();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

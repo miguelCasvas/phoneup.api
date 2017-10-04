@@ -12,12 +12,12 @@ class MarcadoController extends Controller
     //
     use CreateRegisterLog;
     private $modelMarcado = Marcado::class;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelMarcado = new Marcado();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
     }
 
     /**

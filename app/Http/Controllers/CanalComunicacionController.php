@@ -6,6 +6,7 @@ use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\CanalComunicacion\StoreRequest;
 use App\Models\CanalComunicacion;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 
 class CanalComunicacionController extends Controller
@@ -14,12 +15,12 @@ class CanalComunicacionController extends Controller
     use CreateRegisterLog;
     private $modelCanalComunicacion = CanalComunicacion::class;
     private $conjuntoController;
-    private $userController;
+    private $usuarioController;
 
     function __construct(){
 
         $this->modelCanalComunicacion = new CanalComunicacion();
-        $this->userController = new UserController();
+        $this->usuarioController = new usuarioController();
         $this->conjuntoController = new ConjuntoController();
     }
 
@@ -125,5 +126,21 @@ class CanalComunicacionController extends Controller
         }
         $this->CreateRegisterLog($response);
         return $response;
+    }
+
+    public function canalesPorConjunto(Request $request)
+    {
+        $filtros = array();
+
+        foreach ($request->all() as $campo => $vlr) {
+
+            if ($campo == 'id_conjunto')
+                $campo = 'conjuntos.' . $campo;
+
+            $filtros[] = [$campo, $vlr];
+        };
+
+        $data = $this->modelCanalComunicacion->canalesPorConjunto($filtros)->get()->toArray();
+        return response()->json(["data" => $data]);
     }
 }
