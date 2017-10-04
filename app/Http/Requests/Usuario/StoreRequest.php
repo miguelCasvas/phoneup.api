@@ -23,7 +23,6 @@ class StoreRequest extends FormRequestToAPI
             'correo' => ['required', 'email'],
             'contrasenia' => ['required', 'confirmed'],
             'idRol' => ['required', 'numeric', 'exists:roles,id_rol'],
-            'idConjunto' => ['required', 'numeric','exists:conjuntos,id_conjunto'],
         ];
     }
 

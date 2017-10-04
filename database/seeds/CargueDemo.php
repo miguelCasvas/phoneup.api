@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class CargueDemo extends Seeder
 {
@@ -219,50 +220,24 @@ class CargueDemo extends Seeder
             'apellidos' => 'super admin___',
             'email' => 'superAdmin@demo.com',
             'identificacion' => '98765432112345678',
-            'id_rol' => 1,
-            'id_conjunto' => 1
+            'password' => Hash::make('12345678'),
+            'id_rol' => 1
         ]);
         \DB::table('usuarios')->insert([
             'nombres' => 'admin',
             'apellidos' => 'virtual phone',
             'email' => 'admin@demo.com',
             'identificacion' => '98765432112345678',
-            'id_rol' => 2,
-            'id_conjunto' => 1
+            'password' => Hash::make('12345678'),
+            'id_rol' => 2
         ]);
         \DB::table('usuarios')->insert([
             'nombres' => 'user',
             'apellidos' => 'virtual phone',
             'email' => 'user@demo.com',
             'identificacion' => '98765432112345678',
-            'id_rol' => 3,
-            'id_conjunto' => 1
-        ]);
-
-        # CARGUE USER
-        \DB::table('users')->insert([
-            'name' => 'super admin',
-            'email' => 'superAdmin@demo.com',
-            'password' => bcrypt(12345678),
-            'contador_contrasenia' => 0,
-            'is_estado_contrasenia' => 1,
-            'id_usuario' => 1
-        ]);
-        \DB::table('users')->insert([
-            'name' => 'adminn',
-            'email' => 'admin@demo.com',
-            'password' => bcrypt(12345678),
-            'contador_contrasenia' => 0,
-            'is_estado_contrasenia' => 1,
-            'id_usuario' => 2
-        ]);
-        \DB::table('users')->insert([
-            'name' => 'user',
-            'email' => 'user@demo.com',
-            'password' => bcrypt(12345678),
-            'contador_contrasenia' => 0,
-            'is_estado_contrasenia' => 1,
-            'id_usuario' => 3
+            'password' => Hash::make('12345678'),
+            'id_rol' => 3
         ]);
 
     }

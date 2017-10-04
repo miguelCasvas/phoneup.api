@@ -17,12 +17,12 @@ class CreateTableUsuario extends Migration
             $table->string('nombres', 200);
             $table->string('apellidos',200);
             $table->string('email', 200)->nullable();
+            $table->string('password', 255)->nullable();
             $table->string('identificacion', 50);
             $table->date('fecha_nacimiento')->nullable();
             $table->timestamps();
             # FK
             $table->integer('id_rol')->unsigned();
-            $table->integer('id_conjunto')->unsigned();
         });
     }
 

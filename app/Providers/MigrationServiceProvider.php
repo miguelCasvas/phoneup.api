@@ -39,7 +39,6 @@ class MigrationServiceProvider extends ServiceProvider
             # MODELO USUARIOS
             $routeMigrations.'model_Canal_comunicacion/',
 
-            $routeMigrations.'model_User/',
             $routeMigrations.'model_Catalogo/',
             $routeMigrations.'model_Ciudad/',
             $routeMigrations.'model_Conjunto/',
