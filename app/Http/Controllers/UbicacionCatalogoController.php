@@ -22,7 +22,6 @@ class UbicacionCatalogoController extends Controller
         $this->modelUbicacionCatalogo = new UbicacionCatalogo();
     }
 
-
     public function index()
     {
         # Validar permisos
@@ -118,5 +117,34 @@ class UbicacionCatalogoController extends Controller
         $this->CreateRegisterLog($response);
 
         return $response;
+    }
+
+    /**
+     * Generar listado segun filtros enviados por parametro URL
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function listadoUbicacionCatalogoFiltrado(Request $request)
+    {
+        # Validar permisos
+        $this->validarPermisos($this->modelUbicacionCatalogo->getTable(), 2);
+
+        $columns = array_flip($this->modelUbicacionCatalogo->getFillable());
+
+        $filtrosEnviados = array_intersect_key($request->all(), $columns);
+        $filtros = [];
+
+        foreach ($filtrosEnviados as $columnaFiltro => $vlr) {
+            $filtros[] = [$columnaFiltro, $vlr];
+        }
+
+        if (empty($filtros))
+            return response()->json(['data' => []]);
+
+
+        $data = $this->modelUbicacionCatalogo->where($filtros)->get();
+
+        return response()->json(['data' => $data]);
     }
 }

@@ -14,6 +14,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('usuarioextension', 'UsuarioExtensionController');
 
     # UBICACION DE CATALOGO
+    Route::get('ubicacioncatalogofiltrado', 'UbicacionCatalogoController@listadoUbicacionCatalogoFiltrado');
     Route::resource('ubicacioncatalogo', 'UbicacionCatalogoController');
 
     # TIPO SALIDA

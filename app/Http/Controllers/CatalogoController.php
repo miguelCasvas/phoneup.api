@@ -65,7 +65,7 @@ class CatalogoController extends Controller
     public function index()
     {
         $this->validarPermisos($this->modelCatalogo->getTable(), 2);
-        $data = $this->modelCatalogo->all();
+        $data = $this->modelCatalogo->catalogosPorConjunto()->get();
         return response()->json([ "data"=> $data ]);
     }
 
