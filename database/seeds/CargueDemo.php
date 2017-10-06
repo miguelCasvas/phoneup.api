@@ -12,9 +12,6 @@ class CargueDemo extends Seeder
      */
     public function run()
     {
-        # CARGUE DE CIUDADES
-        \DB::table('ciudades')->insert(['nombre_ciudad' => 'Bogotá']);
-        \DB::table('ciudades')->insert(['nombre_ciudad' => 'Cali']);
 
         # CARGUE CONJUNTO
         \DB::table('conjuntos')->insert([
@@ -22,7 +19,7 @@ class CargueDemo extends Seeder
             'direccion' => 'calle falsa 123',
             'email' => 'email@demo.com',
             'telefono' => '87654321',
-            'id_ciudad' => 1
+            'id_ciudad' => 678
         ]);
 
         # CARGUE CATALOGO
@@ -219,7 +216,7 @@ class CargueDemo extends Seeder
             'nombres' => 'super admin',
             'apellidos' => 'super admin___',
             'email' => 'superAdmin@demo.com',
-            'identificacion' => '98765432112345678',
+            'identificacion' => '132456',
             'password' => Hash::make('12345678'),
             'id_rol' => 1
         ]);
@@ -227,7 +224,7 @@ class CargueDemo extends Seeder
             'nombres' => 'admin',
             'apellidos' => 'virtual phone',
             'email' => 'admin@demo.com',
-            'identificacion' => '98765432112345678',
+            'identificacion' => '798456',
             'password' => Hash::make('12345678'),
             'id_rol' => 2
         ]);
@@ -235,7 +232,7 @@ class CargueDemo extends Seeder
             'nombres' => 'user',
             'apellidos' => 'virtual phone',
             'email' => 'user@demo.com',
-            'identificacion' => '98765432112345678',
+            'identificacion' => '123456789',
             'password' => Hash::make('12345678'),
             'id_rol' => 3
         ]);
