@@ -11,5 +11,5 @@ class Ciudad extends Model
 
     protected $primaryKey = "id_ciudad";
 
-    protected $fillable = ["nombre_ciudad"];
+    protected $fillable = ["nombre_ciudad", "id_departamento"];
 }

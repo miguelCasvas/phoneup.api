@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('catalogo', 'CatalogoController');
 
     # CIUDAD
+    Route::get('ciudadfiltrado', 'CiudadController@ciudadFiltrado');
     Route::resource('ciudad', 'CiudadController');
 
     # HISTORIAL
@@ -67,5 +68,12 @@ Route::group(['middleware' => 'auth:api'], function()
 
     # PERMISO POR ROL
     Route::resource('permisorol','PermisosRolController');
+
+    # PAISES
+    Route::resource('pais', 'PaisController');
+
+    # DEPARTAMENTOS
+    Route::get('departamentofiltrado', 'DepartamentoController@departamentosFiltrado');
+    Route::resource('departamento', 'DepartamentoController');
 
 });

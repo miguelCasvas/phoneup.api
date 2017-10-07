@@ -39,7 +39,6 @@ class CiudadController extends Controller
         return $response;
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -115,5 +114,34 @@ class CiudadController extends Controller
         }
         //$this->CreateRegisterLog($response);
         return $response;
+    }
+
+    /**
+     * Generar listado segun filtros enviados por parametro URL
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ciudadFiltrado(Request $request)
+    {
+        # Validar permisos
+        $this->validarPermisos($this->modelCiudad->getTable(), 2);
+
+        $columns = array_flip($this->modelCiudad->getFillable());
+
+        $filtrosEnviados = array_intersect_key($request->all(), $columns);
+        $filtros = [];
+
+        foreach ($filtrosEnviados as $columnaFiltro => $vlr) {
+            $filtros[] = [$columnaFiltro, $vlr];
+        }
+
+        if (empty($filtros))
+            return response()->json(['data' => []]);
+
+
+        $data = $this->modelCiudad->where($filtros)->get();
+
+        return response()->json(['data' => $data]);
     }
 }
