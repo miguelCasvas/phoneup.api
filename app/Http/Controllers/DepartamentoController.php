@@ -82,7 +82,7 @@ class DepartamentoController extends Controller
     public function destroy(Request $request, $id)
     {
         $this->validarPermisos($this->modelDepartamento->getTable(), 4);
-        $this->modelPais = $this->modelDepartamento->find($id);
+        $this->modelDepartamento = $this->modelDepartamento->find($id);
 
         if ($this->modelDepartamento == null)
             abort(400, trans('errors.901'));

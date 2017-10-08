@@ -25,7 +25,7 @@ class PaisController extends Controller
     {
         $this->validarPermisos($this->modelPais->getTable(), 2);
 
-        $data = $this->modelPais->all();
+        $data = $this->modelPais->select('*')->orderBy('nombre_pais', 'asc')->get();
         $response = response()->json([ 'data' => $data ]);
 
         # Creacion en modelo log
@@ -62,7 +62,7 @@ class PaisController extends Controller
             abort(400, trans('error.901'));
 
         $this->modelPais->nombre_pais = $request->get('nombrePais');
-        $this->modelPais->nombre_oficial_pais = $request->get('nombreOficialPais');
+        //$this->modelPais->nombre_oficial_pais = $request->get('nombreOficialPais');
         $this->modelPais->iso3 = $request->get('iso3');
         $this->modelPais->iso2 = $request->get('iso2');
         $this->modelPais->faostat = $request->get('faostat');

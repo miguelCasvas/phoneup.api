@@ -26,7 +26,7 @@ class StoreRequest extends FormRequestToAPI
     {
         return [
             'nombrePais' => ['required'],
-            'nombreOficialPais' => ['required']
+            //'nombreOficialPais' => ['required']
         ];
     }
 }
