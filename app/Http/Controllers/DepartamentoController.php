@@ -53,7 +53,7 @@ class DepartamentoController extends Controller
         $this->modelDepartamento->id_pais = $request->get('idPais');
         $this->modelDepartamento->save();
 
-        $response = response()->json($this->modelDepartamento);
+        $response = response()->json(['data' => $this->modelDepartamento]);
 
         # Creacion en modelo log
         $this->CreateRegisterLog($response);
@@ -72,7 +72,7 @@ class DepartamentoController extends Controller
         $this->modelDepartamento->id_pais = $request->get('idPais');
         $this->modelDepartamento->save();
 
-        $response = response()->json($this->modelDepartamento);
+        $response = response()->json(['data' => $this->modelDepartamento]);
 
         # Creacion en modelo log
         $this->CreateRegisterLog($response);

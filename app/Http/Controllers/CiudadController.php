@@ -30,6 +30,7 @@ class CiudadController extends Controller
     {
         $this->validarPermisos($this->modelCiudad->getTable(), 1);
         $this->modelCiudad->nombre_ciudad    = $request->get('nombreCiudad');
+        $this->modelCiudad->id_departamento    = $request->get('idDepartamento');
         $this->modelCiudad->save();
 
         $response = response()->json(['data'=>$this->modelCiudad]);

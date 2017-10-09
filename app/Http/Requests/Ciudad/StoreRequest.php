@@ -15,7 +15,8 @@ class StoreRequest extends FormRequestToAPI
     public function rules()
     {
         return [
-            'nombreCiudad'=>['required']
+            'nombreCiudad'=>['required'],
+            'idDepartamento'=>['required', 'numeric', 'exists:departamentos,id_departamento']
         ];
     }
 }

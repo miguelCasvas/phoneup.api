@@ -46,7 +46,8 @@ class PaisController extends Controller
         $this->modelPais->codDian = $request->get('codDian');
 
         $this->modelPais->save();
-        $response = response()->json($this->modelPais);
+
+        $response = response()->json(['data' => $this->modelPais]);
 
         # Creacion en modelo log
         $this->CreateRegisterLog($response);
@@ -70,7 +71,7 @@ class PaisController extends Controller
         $this->modelPais->codDian = $request->get('codDian');
 
         $this->modelPais->save();
-        $response = response()->json($this->modelPais);
+        $response = response()->json(['data' => $this->modelPais]);
 
         # Creacion en modelo log
         $this->CreateRegisterLog($response);
