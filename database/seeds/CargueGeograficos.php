@@ -234,6 +234,8 @@ class CargueGeograficos extends Seeder
 
 
         ]);
+
+        echo "CARGUE DE PAISES FINALIZADA\n";
     }
 
     public function cargueDepartamentos()
@@ -656,6 +658,9 @@ class CargueGeograficos extends Seeder
             ['id_departamento' => 418, 'nombre_departamento' => 'Jutiapa', 'id_pais' => 70],
             ['id_departamento' => 9999, 'nombre_departamento' => 'Sin información', 'id_pais' => 999]
         ]);
+
+        echo "CARGUE DE DEPARTAMENTOS FINALIZADA\n";
+
     }
 
     public function cargueCiudades()
@@ -1664,5 +1669,8 @@ class CargueGeograficos extends Seeder
             ['id_ciudad' => 9999, 'nombre_ciudad' => 'Sin información', 'id_departamento' => 9999],
 
         ]);
+
+        echo "CARGUE DE CIUDADES FINALIZADA\n";
+
     }
 }

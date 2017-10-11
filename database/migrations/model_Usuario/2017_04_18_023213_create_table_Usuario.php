@@ -23,6 +23,8 @@ class CreateTableUsuario extends Migration
             $table->timestamps();
             # FK
             $table->integer('id_rol')->unsigned();
+            $table->integer('id_conjunto')->unsigned();
+
         });
     }
 

@@ -17,6 +17,8 @@ class CreateTablePermisosPorRol extends Migration
             $table->increments('id_permisos_por_rol');
             $table->integer('id_rol')->unsigned();
             $table->integer('id_permiso')->unsigned();
+            $table->timestamps();
+
         });
     }
 

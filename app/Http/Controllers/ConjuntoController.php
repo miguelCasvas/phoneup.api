@@ -74,7 +74,6 @@ class ConjuntoController extends Controller
         return response()->json([ "data"=> $data ]);
     }
 
-
     /**
      * Update the specified resource in storage. put conjunto
      *
@@ -130,5 +129,40 @@ class ConjuntoController extends Controller
         return $response;
     }
 
+    /**
+     * Realiza la busqueda de:
+     * * Cantidad de Extensiones
+     * * Cantidad de catalogos
+     * * Cantidad de Canales
+     * Que estas asociados a un conjunto
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function datos1_Conjunto(Request $request)
+    {
+        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+        $data = $this->modelConjunto->conjuntos_ft_usuarios_catalogos()->get();
+        return response()->json(['data' => $data]);
+    }
 
+    /**
+     * Realiza busqueda de:
+     * *Pais
+     * *Departamento
+     * *Ciudad
+     * Relacionados al conjunto
+     *
+     * @param Request $request
+     */
+    public function datos2_Conjunto(Request $request)
+    {
+
+        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+        $idConjunto = $request->get('id_conjunto');
+        $data = $this->modelConjunto->conjunto_ft_ciudad_departamento_pais($idConjunto)->get();
+
+        return response()->json(['data' => $data]);
+    }
+    
 }

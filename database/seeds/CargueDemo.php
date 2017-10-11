@@ -118,7 +118,7 @@ class CargueDemo extends Seeder
         #ADMINISTRADOR
         \DB::table('modelos')->insert(['nombre_modelo' => 'usuario_extensiones']);
         \DB::table('modelos')->insert(['nombre_modelo' => 'extensiones']);
-                            #USURIO
+        #USURIO
         \DB::table('modelos')->insert(['nombre_modelo' => 'usuarios']);
         \DB::table('modelos')->insert(['nombre_modelo' => 'marcados']);
         \DB::table('modelos')->insert(['nombre_modelo' => 'historiales']);

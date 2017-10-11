@@ -44,6 +44,6 @@ class Controller extends BaseController
         });
 
         if ($acceso === false)
-            abort(400, trans('errors.902'));
+            abort(400, trans('errors.902', ['recurso' => $modelo]));
     }
 }

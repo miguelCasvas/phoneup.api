@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('notificacion','NotificacionController');
 
     # CONJUNTO
+    Route::get('conjuntos/datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
+    Route::get('conjuntos/datosgenerales_2', 'ConjuntoController@datos2_Conjunto');
     Route::resource('conjunto', 'ConjuntoController');
 
     # PERMISOS
