@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth:api'], function()
     # CONJUNTO
     Route::get('conjuntos/datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
     Route::get('conjuntos/datosgenerales_2', 'ConjuntoController@datos2_Conjunto');
+    Route::get('conjuntos/datosgenerales_3', 'ConjuntoController@datos3_Conjunto');# Extensiones
+    Route::get('conjuntos/datosgenerales_4', 'ConjuntoController@datos4_Conjunto');# Extensiones Rel Usuario
     Route::resource('conjunto', 'ConjuntoController');
 
     # PERMISOS
@@ -39,7 +41,6 @@ Route::group(['middleware' => 'auth:api'], function()
 
     # EXTENSIONES
     Route::resource('extension', 'ExtensionController');
-    Route::get('extensiones/conjunto/{idConjunto}', 'ExtensionController@extensionesPorConjunto');
 
     # CANAL DE COMUNICACION
     Route::get('canalcomunicacion/conjuntos', 'CanalComunicacionController@canalesPorConjunto');

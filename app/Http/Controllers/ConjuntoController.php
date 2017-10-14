@@ -164,5 +164,68 @@ class ConjuntoController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
+    /**
+     * Realiza la busqueda de extensiones asociadas a un conjunto
+     * Para realizar filtros sobre la consulta se deben enviar como parametros GET
+     * Ej. ?id_cojunto = 1&id_extension=1
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function datos3_Conjunto(Request $request)
+    {
+        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+
+        $callable = function(&$key, &$vlr){
+
+            # Si el parametro es id_conjunto cambia la invocacion
+            # de esta columna añadiendo la tabla origen para no crear
+            # ambiguedad
+            if ($key == 'id_conjunto')
+                $key = 'conjuntos.' . $key;
+        };
+
+        $filtros = $this->generarFiltros($request->all(), '=', $callable);
+        $data = $this->modelConjunto->conjunto_ft_extensiones($filtros)->get();
+        return response()->json(['data' => $data]);
+
+    }
+
+    /**
+     * Realiza la busqueda de extensiones con relacion a
+     * Conjunto
+     * Usuario
+     * Para realizar filtros sobre la consulta se deben enviar como parametros GET
+     * Ej. ?id_cojunto = 1&id_extension=1
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function datos4_Conjunto(Request $request)
+    {
+
+        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+
+        $callable = function(&$key, &$vlr){
+
+            # Si el parametro es id_conjunto cambia la invocacion
+            # de esta columna añadiendo la tabla origen para no crear
+            # ambiguedad
+            if ($key == 'id_conjunto')
+                $key = 'conjuntos.' . $key;
+
+            if ($key == 'id_extension')
+                $key = 'extensiones.' . $key;
+
+            if ($key == 'id_usuario')
+                $key = 'usuarios.' . $key;
+        };
+
+        $filtros = $this->generarFiltros($request->all(), '=', $callable);
+        $data = $this->modelConjunto->conjunto_ft_Rel_extensionUsuario($filtros)->get();
+
+        return response()->json(['data' => $data]);
+    }
     
 }

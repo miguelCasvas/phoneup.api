@@ -130,15 +130,16 @@ class CanalComunicacionController extends Controller
 
     public function canalesPorConjunto(Request $request)
     {
-        $filtros = array();
 
-        foreach ($request->all() as $campo => $vlr) {
+        $callable = function(&$key, &$vlr){
 
-            if ($campo == 'id_conjunto')
-                $campo = 'conjuntos.' . $campo;
-
-            $filtros[] = [$campo, $vlr];
+            # Si el parametro es id_conjunto cambia la invocacion
+            # de esta columna añadiendo la tabla origen para no crear
+            # ambiguedad
+            if ($key == 'id_conjunto')
+                $key = 'conjuntos.' . $key;
         };
+        $filtros = $this->generarFiltros($request->all(), '=', $callable);
 
         $data = $this->modelCanalComunicacion->canalesPorConjunto($filtros)->get()->toArray();
         return response()->json(["data" => $data]);

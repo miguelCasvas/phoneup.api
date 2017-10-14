@@ -14,25 +14,6 @@ class Extension extends Model
     protected $fillable = ['extension', 'id_conjunto', 'id_estado'];
 
     /**
-     * Busqueda de extensiones activas por conjunto verificando
-     * que extension esta libre y cual no
-     *
-     * @param $idConjunto
-     * @return $this
-     */
-    public function queryExtensionPorConjunto($idConjunto)
-    {
-        $query =
-            $this
-                ->select('extensiones.id_extension', 'extension', 'usuario_extensiones.id_usuario As usuarioAsignado', 'id_conjunto')
-                ->extensionesDisponibles()
-                ->where('id_conjunto', $idConjunto)
-                ->estado();
-
-        return $query;
-    }
-
-    /**
      * Filtrado de extensiones por estado
      *
      * @param $query
@@ -55,4 +36,5 @@ class Extension extends Model
     {
         return $query->leftJoin('usuario_extensiones', 'extensiones.id_extension', '=', 'usuario_extensiones.id_extension');
     }
+
 }

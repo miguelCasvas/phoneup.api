@@ -46,4 +46,20 @@ class Controller extends BaseController
         if ($acceso === false)
             abort(400, trans('errors.902', ['recurso' => $modelo]));
     }
+
+    protected function generarFiltros(array $params, $operador = '=', callable $callback = null)
+    {
+        $filtros = array();
+
+        foreach ($params as $campo => $vlr) {
+
+            if(is_callable($callback))
+                $callback($campo, $vlr);
+
+            $filtros[] = [$campo, $operador, $vlr];
+
+        };
+
+        return $filtros;
+    }
 }

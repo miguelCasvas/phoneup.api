@@ -119,15 +119,8 @@ class ExtensionController extends Controller
         return $response;
     }
 
-    /**
-     * Retorna las extensiones activas para un conjunto
-     * @param $idConjunto
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function extensionesPorConjunto($idConjunto)
+    public function extensionesPorConjunto_usuario()
     {
-        $this->validarPermisos($this->modelExtension->getTable(), 2);
-        $data = $this->modelExtension->queryExtensionPorConjunto($idConjunto)->get();
-        return response()->json([ "data"=> $data ]);
+
     }
 }

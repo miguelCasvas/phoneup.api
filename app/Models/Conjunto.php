@@ -46,4 +46,37 @@ class Conjunto extends Model
         return $query;
     }
 
+    public function conjunto_ft_extensiones(array $filtros = null)
+    {
+        $campos[] = 'conjuntos.id_conjunto';
+        $campos[] = 'conjuntos.nombre_conjunto';
+        $campos[] = 'extensiones.id_extension';
+        $campos[] = 'extensiones.extension';
+
+        $query =
+            $this->select($campos)
+            ->join('extensiones', 'conjuntos.id_conjunto', '=', 'extensiones.id_conjunto');
+
+        if (empty($filtros) == false){
+            $query->where($filtros);
+        }
+
+        return $query;
+    }
+
+    public function conjunto_ft_Rel_extensionUsuario(array $filtros = null)
+    {
+        $campos[] = 'id_usuario_extension';
+        $campos[] = 'usuarios.id_usuario';
+        $campos[] = 'usuarios.nombres';
+
+        $query = $this->conjunto_ft_extensiones($filtros);
+
+        $query
+            ->addSelect($campos)
+            ->leftJoin('usuario_extensiones', 'extensiones.id_extension', '=', 'usuario_extensiones.id_extension')
+            ->leftJoin('usuarios', 'usuario_extensiones.id_usuario', '=', 'usuarios.id_usuario');
+
+        return $query;
+    }
 }
