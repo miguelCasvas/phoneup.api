@@ -17,8 +17,8 @@ class CreateTableConjunto extends Migration
             $table->string('nombre_conjunto', 200);
             $table->string('direccion', 200);
             $table->string('email',200);
-            $table->string('telefono',10);
-            $table->string('complemento',10)->nullable();
+            $table->string('telefono',30);
+            $table->string('complemento',30)->nullable();
             $table->string('imagen',50)->nullable();
             $table->timestamps();
 
