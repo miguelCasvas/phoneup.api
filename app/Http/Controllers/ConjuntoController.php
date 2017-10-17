@@ -7,7 +7,7 @@ use App\Http\Requests\Conjunto\StoreRequest;
 use App\Models\Conjunto;
 use Illuminate\Http\Request;
 
-class ConjuntoController extends Controller
+class ConjuntoController extends ApiController
 {
     use CreateRegisterLog;
     /**
@@ -15,7 +15,6 @@ class ConjuntoController extends Controller
      */
     private $modelConjunto = Conjunto::class;
 
-    //private $conjuntoController;
     function __construct()
     {
         $this->modelConjunto = new Conjunto();
@@ -24,8 +23,8 @@ class ConjuntoController extends Controller
     /**
      * Store a newly created resource in storage. craete conjunto
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRequest $request)
     {
@@ -45,10 +44,48 @@ class ConjuntoController extends Controller
     }
 
     /**
+     * @SWG\Get(
+     *     path="/conjuntos/{id}",
+     *     summary="Busqueda de conjunto por id",
+     *     description="Retorna listado de conjuntos.",
+     *     operationId="api.conjuntos.index",
+     *     produces={"application/json"},
+     *     tags={"CONJUNTOS"},
+     *     @SWG\Parameter(
+     * 			name="id",
+     * 			in="path",
+     * 			required=true,
+     * 			type="string",
+     * 			description="Id del conjunto a buscar",
+     * 		),
+     *     @SWG\Parameter(
+     *         name="sort",
+     *         in="query",
+     *         description="Etiqueta para ordenamiento <br>(-) Descendente <br>Ascendente <br>del listado Ej. -nombre_conjunto,direccion",
+     *         required=false,
+     *         type="string",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Si la peticion es correcta devolvera un listado de los conjuntons del sistema"
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized Unauthenticated.",
+     *     ),
+     *     security={
+     *       {"acceso_bearer": {}}
+     *     }
+     * )
+     */
+
+    /**
      * Display the specified resource. get conjunto
      *
-     * @param  \App\Models\Conjunto  $conjunto
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -62,32 +99,134 @@ class ConjuntoController extends Controller
     }
 
     /**
+     * @SWG\Get(
+     *     path="/conjuntos",
+     *     summary="Lectura Conjuntos activos del sistema",
+     *     description="Retorna listado de conjuntos.",
+     *     operationId="api.conjuntos.index",
+     *     produces={"application/json"},
+     *     tags={"CONJUNTOS"},
+     *     @SWG\Parameter(
+     *         name="fields",
+     *         in="query",
+     *         description="Parametro para seleccion de campos a retornar <br> Ej. id_conjunto, nombre_conjunto",
+     *         required=false,
+     *         type="string",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="sort",
+     *         in="query",
+     *         description="Etiqueta para ordenamiento <br>(-) Descendente <br>Ascendente <br>del listado <br>Ej. -nombre_conjunto,direccion",
+     *         required=false,
+     *         type="string",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id_conjunto",
+     *         in="query",
+     *         description="Parametro Ejemplo de filtrado, el vlr puede iniciar por <br>(> May| < Men| >= | <=)",
+     *         required=false,
+     *         type="string",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Parametro que indica la hoja de la paginacion",
+     *         required=false,
+     *         type="integer",
+     *         @SWG\Items(type="integer"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="porPagina",
+     *         in="query",
+     *         description="Parametro que indica la cantidad de registros por hoja en la paginación",
+     *         required=false,
+     *         type="integer",
+     *         @SWG\Items(type="integer"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Si la peticion es correcta devolvera un listado de los conjuntos del sistema"
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized Unauthenticated.",
+     *     ),
+     *     security={
+     *       {"acceso_bearer": {}}
+     *     }
+     * )
+     */
+
+    /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->validarPermisos($this->modelConjunto->getTable(), 2);
-        $data = $this->modelConjunto->all();
-        return response()->json([ "data"=> $data ]);
+        $porPagina = $request->get('porPagina') ?: 15;
+        $data = $this->modelConjunto->paginate($porPagina);
+        return response()->json($data);
     }
+
+    /**
+     * @SWG\Put(
+     *     path="/conjuntos/{id}",
+     *     tags={"CONJUNTOS"},
+     *     operationId="updateConjunto",
+     *     summary="Actualiza conjunto por Id",
+     *     description="",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     * 			name="id",
+     * 			in="path",
+     * 			required=true,
+     * 			type="string",
+     * 			description="Id del conjunto a editar",
+     * 		),
+     *      @SWG\Response(
+     *         response=200,
+     *         description="Si la peticion es correcta devolvera un objeto tipo JSON"
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Invalid ID supplied",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=405,
+     *         description="Validation exception",
+     *     ),
+     *     security={{"acceso_bearer":{}}}
+     * )
+     */
 
     /**
      * Update the specified resource in storage. put conjunto
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Conjunto  $conjunto
-     * @return \Illuminate\Http\Response
-     */
+     * @param StoreRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|null
+     *
+    */
     public function update(StoreRequest $request, $id)
     {
-        //
         $this->validarPermisos($this->modelConjunto->getTable(), 3);
         $response = null;
         $this->modelConjunto = $this->modelConjunto->find($id);
-//
         if ($this->modelConjunto == null ){
             abort(400, trans('errors.901'));
         }
@@ -108,6 +247,33 @@ class ConjuntoController extends Controller
     }
 
     /**
+     * @SWG\Delete(
+     *     path="/conjuntos/{id}",
+     *     summary="Eliminación de conjunto por Id",
+     *     description="",
+     *     operationId="deletePet",
+     *     produces={"application/xml", "application/json"},
+     *     tags={"CONJUNTOS"},
+     *     @SWG\Parameter(
+     *         description="Pet id to delete",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Id Not Found | Existen extensiones relacionadas | Canales comunicacion asociadas"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Pet not found"
+     *     ),
+     *     security={{"acceso_bearer":{}}}
+     * )
+     */
+
+    /**
      * Remove the specified resource from storage. delete conjunto
      *
      * @param  \App\Models\Conjunto  $conjunto
@@ -122,7 +288,16 @@ class ConjuntoController extends Controller
         if ($this->modelConjunto == null){
             abort(400, trans('errors.901'));
         }else {
-            $this->modelConjunto->delete();
+
+            try{
+                $this->modelConjunto->delete();
+            }catch(\Exception $e){
+
+                if ($e->getCode() == 23000)
+                    abort(400, 'El conjunto a eliminar tiene extensiones relacionadas o Canales de comunicación asociadas');
+
+            }
+
             $response = response()->json([  'data'=> ['id'=> $id ]]);
         }
         //$this->CreateRegisterLog($response);

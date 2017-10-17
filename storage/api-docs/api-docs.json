@@ -1,0 +1,254 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": ".:: PHONE UP ::. API",
+        "description": "Manual para consumo del API",
+        "contact": {
+            "name": "SOPORTE API",
+            "url": "http://phoneup.estecnologia.co/soporte",
+            "email": "soporte@phoneup.estecnologia.co"
+        },
+        "version": "1.0.0"
+    },
+    "host": "phoneup.api.com:8080",
+    "basePath": "/v1",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/conjuntos/{id}": {
+            "get": {
+                "tags": [
+                    "CONJUNTOS"
+                ],
+                "summary": "Busqueda de conjunto por id",
+                "description": "Retorna listado de conjuntos.",
+                "operationId": "api.conjuntos.index",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del conjunto a buscar",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Etiqueta para ordenamiento <br>(-) Descendente <br>Ascendente <br>del listado Ej. -nombre_conjunto,direccion",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si la peticion es correcta devolvera un listado de los conjuntons del sistema"
+                    },
+                    "401": {
+                        "description": "Unauthorized Unauthenticated."
+                    }
+                },
+                "security": [
+                    {
+                        "acceso_bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "CONJUNTOS"
+                ],
+                "summary": "Actualiza conjunto por Id",
+                "description": "",
+                "operationId": "updateConjunto",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del conjunto a editar",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si la peticion es correcta devolvera un objeto tipo JSON"
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "acceso_bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "CONJUNTOS"
+                ],
+                "summary": "Eliminaci\u00f3n de conjunto por Id",
+                "description": "",
+                "operationId": "deletePet",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Pet id to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Id Not Found | Existen extensiones relacionadas | Canales comunicacion asociadas"
+                    },
+                    "404": {
+                        "description": "Pet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "acceso_bearer": []
+                    }
+                ]
+            }
+        },
+        "/conjuntos": {
+            "get": {
+                "tags": [
+                    "CONJUNTOS"
+                ],
+                "summary": "Lectura Conjuntos activos del sistema",
+                "description": "Retorna listado de conjuntos.",
+                "operationId": "api.conjuntos.index",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Parametro para seleccion de campos a retornar <br> Ej. id_conjunto, nombre_conjunto",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Etiqueta para ordenamiento <br>(-) Descendente <br>Ascendente <br>del listado <br>Ej. -nombre_conjunto,direccion",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "id_conjunto",
+                        "in": "query",
+                        "description": "Parametro Ejemplo de filtrado, el vlr puede iniciar por <br>(> May| < Men| >= | <=)",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Parametro que indica la hoja de la paginacion",
+                        "required": false,
+                        "type": "integer",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "porPagina",
+                        "in": "query",
+                        "description": "Parametro que indica la cantidad de registros por hoja en la paginaci\u00f3n",
+                        "required": false,
+                        "type": "integer",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Si la peticion es correcta devolvera un listado de los conjuntos del sistema"
+                    },
+                    "401": {
+                        "description": "Unauthorized Unauthenticated."
+                    }
+                },
+                "security": [
+                    {
+                        "acceso_bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "description": "Class ApiController",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "description": "Class ApiController",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "acceso_bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+        "Oauth2": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "http://phoneup.api.com:8080/login",
+            "scopes": {}
+        }
+    }
+}

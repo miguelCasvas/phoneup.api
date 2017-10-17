@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', '.:: PHONE UP ::. API '),
 
     /*
     |--------------------------------------------------------------------------
@@ -181,6 +181,8 @@ return [
          * passport Oauth 2.0
          */
         Laravel\Passport\PassportServiceProvider::class,
+
+        L5Swagger\L5SwaggerServiceProvider::class,
     ],
 
     /*

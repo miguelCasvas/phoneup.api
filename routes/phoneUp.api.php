@@ -79,4 +79,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('departamentofiltrado', 'DepartamentoController@departamentosFiltrado');
     Route::resource('departamento', 'DepartamentoController');
 
+
+
+    Route::group(['prefix' => 'v1'], function()
+    {
+        Route::resource('conjuntos', 'ConjuntoController');
+    });
+
+
 });

@@ -11,6 +11,14 @@ class Conjunto extends Model
     protected $fillable = ["nombre_conjunto", "direccion", "email", "telefono", "complemento", "imagen", "id_ciudad"];
 
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new ConsultaPersonalizada());
+
+    }
+
     public function conjuntos_ft_usuarios_catalogos()
     {
         $query =
