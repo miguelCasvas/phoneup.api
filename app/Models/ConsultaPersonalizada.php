@@ -98,6 +98,24 @@ class ConsultaPersonalizada implements Scope
     }
 
     /**
+     * @param Builder $builder
+     */
+    private function consultasEmbebidas(Builder $builder, array $paramsURL = [])
+    {
+        if (array_key_exists('embebed' ,$paramsURL)){
+
+            $recursosEmbebidos = $paramsURL['embebed'];
+            $recursosEmbebidos = explode(',', $recursosEmbebidos);
+
+            foreach ($recursosEmbebidos as $modeloColumna){
+
+            }
+
+
+        }
+    }
+
+    /**
      * Genera busqueda de cualquier filtro enviado por url como parametro
      * para filtrar la busqueda
      *

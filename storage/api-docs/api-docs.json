@@ -201,6 +201,17 @@
                             "type": "integer"
                         },
                         "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "embebed",
+                        "in": "query",
+                        "description": "...",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
                     }
                 ],
                 "responses": {

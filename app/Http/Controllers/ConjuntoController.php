@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ConjuntoController extends ApiController
 {
     use CreateRegisterLog;
+
     /**
      * @var Usuario
      */
@@ -149,6 +150,15 @@ class ConjuntoController extends ApiController
      *         required=false,
      *         type="integer",
      *         @SWG\Items(type="integer"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="embebed",
+     *         in="query",
+     *         description="...",
+     *         required=false,
+     *         type="string",
+     *         @SWG\Items(type="string"),
      *         collectionFormat="multi"
      *     ),
      *     @SWG\Response(
