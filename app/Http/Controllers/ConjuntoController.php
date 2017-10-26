@@ -327,8 +327,8 @@ class ConjuntoController extends ApiController
     public function datos1_Conjunto(Request $request)
     {
         $this->validarPermisos($this->modelConjunto->getTable(), 2);
-        $data = $this->modelConjunto->conjuntos_ft_usuarios_catalogos()->get();
-        return response()->json(['data' => $data]);
+        $data = $this->modelConjunto->conjuntos_ft_usuarios_catalogos();
+        return response()->json(['data' => $data->get(), 'toSql' => $data->toSql()]);
     }
 
     /**

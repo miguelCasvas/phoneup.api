@@ -80,11 +80,26 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('departamento', 'DepartamentoController');
 
 
-
+    # RUTAS VERSION 1
     Route::group(['prefix' => 'v1'], function()
     {
-        Route::resource('conjuntos', 'ConjuntoController');
+
+
+        Route::group(['prefix' => 'conjuntos'], function(){
+
+            Route::get('datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
+            Route::resource('/', 'ConjuntoController');
+
+        });
+
+
     });
 
 
+});
+
+Route::get('datosConsulta', function(){
+   $datos = new \App\Models\Conjunto();
+
+   dd($datos->conjuntos_ft_usuarios_catalogos());
 });

@@ -11,9 +11,29 @@ class ConsultaPersonalizada implements Scope
 
     const PALABRAS_RESERVADAS = ['fields', 'sort', 'embebed', 'offset', 'limit'];
 
-    private $columnas = ['*'];
+    /**
+     * @var
+     */
+    private $model;
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
+    private $builder;
+
+    /**
+     * @var array
+     */
+    private $columnas = [];
+
+    /**
+     * @var array
+     */
     private $condiciones = [];
-    private $paginar = [];
+
+    /**
+     * @var array
+     */
     private $ordenar = [];
 
     /**
@@ -26,14 +46,21 @@ class ConsultaPersonalizada implements Scope
     public function apply(Builder $builder, Model $model)
     {
         $paramsURL = request()->all();
+        $this->builder = $builder;
+
         $this->ubicarParametros($paramsURL, $model);
 
-        $builder
-            ->select($this->columnas)
-            ->where( $this->condiciones );
+        # Se definen campos a select si vienen por parametro url
+        if (count($this->columnas) > 0)
+            $this->builder->Select($this->columnas);
 
+        # Se agrega condicionales si vienen por parametro url
+        $this->builder->where( $this->condiciones );
+
+        # Recorrido e insercion de campos con los que ordenar los
+        # resultados de la consulta
         foreach ( $this->ordenar as $column => $tpoOrden ) {
-            $builder->orderBy($column, $tpoOrden);
+            $this->builder->orderBy($column, $tpoOrden);
         }
 
     }
@@ -55,7 +82,7 @@ class ConsultaPersonalizada implements Scope
      */
     private function camposParticulares(array $paramsURL = [])
     {
-        $this->columnas = ['*'];
+        $this->columnas = [];
 
         if (array_key_exists('fields', $paramsURL)){
             $this->columnas = explode(',', $paramsURL['fields']);
