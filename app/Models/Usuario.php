@@ -73,6 +73,7 @@ class Usuario extends Authenticatable
                 'usuarios.email',
                 'usuarios.identificacion',
                 'usuarios.fecha_nacimiento',
+                'usuarios.id_conjunto',
                 'roles.id_rol',
                 'roles.nombre_rol'
             )
@@ -81,6 +82,17 @@ class Usuario extends Authenticatable
 
         $idUsuario = $infoUsuarioQuery->first()->id_usuario;
         $idRol = $infoUsuarioQuery->first()->id_rol;
+
+
+        # Consulta de Conjunto
+        $infoConjuntoQuery =
+            \DB::table('conjuntos')
+                ->select(
+                    'nombre_conjunto',
+                    'direccion',
+                    'telefono'
+                )
+                ->where('id_conjunto', $infoUsuarioQuery->first()->id_conjunto);
 
         # Consulta de extensiones relacionadas al (usuario - conjuntos)
         $infoExtensionesQuery =
@@ -100,7 +112,6 @@ class Usuario extends Authenticatable
                 ->where('usuario_extensiones.id_usuario', $idUsuario);
 
         # Consulta de permisos del usuario
-
         $infoPermisosQuery =
             \DB::table('permisos_por_rol')
                 ->select(
@@ -120,9 +131,10 @@ class Usuario extends Authenticatable
         return $collectionQuerys =
             collect(
                 [
-                    'usuarios' => $infoUsuarioQuery,
+                    'usuarios'    => $infoUsuarioQuery,
+                    'conjuntos'   => $infoConjuntoQuery,
                     'extensiones' => $infoExtensionesQuery,
-                    'permisos' => $infoPermisosQuery
+                    'permisos'    => $infoPermisosQuery
                 ]
             );
     }
@@ -136,6 +148,7 @@ class Usuario extends Authenticatable
         $infoUsuarioQueries = $this->queryInfoUsuario($idUser);
 
         $usuario = $infoUsuarioQueries->get('usuarios');
+        $conjunto = $infoUsuarioQueries->get('conjuntos');
         $extensiones = $infoUsuarioQueries->get('extensiones')->get();
         $permisos = $infoUsuarioQueries->get('permisos')->get();
 
@@ -149,6 +162,13 @@ class Usuario extends Authenticatable
         $infoUsuario->put('fecha_nacimiento', $usuario->first()->fecha_nacimiento);
         $infoUsuario->put('id_rol', $usuario->first()->id_rol);
         $infoUsuario->put('nombre_rol', $usuario->first()->nombre_rol);
+        $infoUsuario->put('id_conjunto', $usuario->first()->id_conjunto);
+
+        #Conjuntos
+        $infoUsuario->put('nombre_conjunto', $conjunto->first()->nombre_conjunto);
+        $infoUsuario->put('direccion', $conjunto->first()->direccion);
+        $infoUsuario->put('telefono', $conjunto->first()->direccion);
+
 
         # Extensiones
         $infoUsuario->put('extensiones', new Collection());

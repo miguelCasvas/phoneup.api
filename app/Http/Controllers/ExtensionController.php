@@ -123,4 +123,16 @@ class ExtensionController extends Controller
     {
 
     }
+
+    /**
+     * @param Request $request
+     * @param $idConjunto
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function extensionesPorConjunto(Request $request, $idConjunto)
+    {
+        $porPagina = $request->get('porPagina') ?: 15;
+        $data = $this->modelExtension->where('id_conjunto', $idConjunto)->paginate($porPagina);
+        return response()->json($data);
+    }
 }

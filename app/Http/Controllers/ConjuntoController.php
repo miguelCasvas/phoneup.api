@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Conjunto\StoreRequest;
 use App\Models\Conjunto;
+use App\Models\ConsultaPersonalizada;
 use Illuminate\Http\Request;
 
 class ConjuntoController extends ApiController
@@ -372,6 +373,7 @@ class ConjuntoController extends ApiController
         };
 
         $filtros = $this->generarFiltros($request->all(), '=', $callable);
+
         $data = $this->modelConjunto->conjunto_ft_extensiones($filtros)->get();
         return response()->json(['data' => $data]);
 

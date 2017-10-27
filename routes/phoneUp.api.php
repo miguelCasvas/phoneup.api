@@ -87,7 +87,9 @@ Route::group(['middleware' => 'auth:api'], function()
 
         Route::group(['prefix' => 'conjuntos'], function(){
 
+            Route::get('{idConjunto}/extensiones', 'ExtensionController@extensionesPorConjunto');
             Route::get('datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
+            //Route::get('datosgenerales_3', 'ConjuntoController@datos3_Conjunto');
             Route::resource('/', 'ConjuntoController');
 
         });
