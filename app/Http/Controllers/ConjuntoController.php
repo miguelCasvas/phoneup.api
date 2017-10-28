@@ -329,7 +329,7 @@ class ConjuntoController extends ApiController
     {
         $this->validarPermisos($this->modelConjunto->getTable(), 2);
         $data = $this->modelConjunto->conjuntos_ft_usuarios_catalogos();
-        return response()->json(['data' => $data->get(), 'toSql' => $data->toSql()]);
+        return response()->json(['data' => $data->get()]);
     }
 
     /**

@@ -15,7 +15,7 @@ class Conjunto extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new ConsultaPersonalizada());
+        //static::addGlobalScope(new ConsultaPersonalizada());
 
     }
 

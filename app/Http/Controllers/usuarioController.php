@@ -40,6 +40,8 @@ class usuarioController extends Controller
         $this->modelUsuario->fecha_nacimiento   = $request->get('fechaNacimiento');
         $this->modelUsuario->email              = $request->get('correo');
         $this->modelUsuario->id_rol             = $request->get('idRol');
+        $this->modelUsuario->id_conjunto        = $request->get('idConjunto');
+        $this->modelUsuario->password           = $request->get('contrasenia');
         $this->modelUsuario->save();
 
         $response = response()->json($this->modelUsuario);

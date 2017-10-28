@@ -95,13 +95,16 @@ Route::group(['middleware' => 'auth:api'], function()
         });
 
 
+        # USUARIO
+        Route::group(['prefix' => 'usuarios'], function(){
+            Route::resource('/', 'usuarioController');
+        });
+
+        # EXTENSION DE USUARIO
+        Route::group(['prefix' => 'usuarioextension'], function(){
+            Route::resource('/', 'UsuarioExtensionController');
+        });
     });
 
 
-});
-
-Route::get('datosConsulta', function(){
-   $datos = new \App\Models\Conjunto();
-
-   dd($datos->conjuntos_ft_usuarios_catalogos());
 });
