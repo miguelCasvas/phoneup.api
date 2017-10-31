@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth:api'], function()
             Route::get('{idConjunto}/extensiones', 'ExtensionController@extensionesPorConjunto');
             Route::get('datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
             //Route::get('datosgenerales_3', 'ConjuntoController@datos3_Conjunto');
+            Route::get('datosgenerales_4', 'ConjuntoController@datos4_Conjunto');
             Route::resource('/', 'ConjuntoController');
 
         });
@@ -97,6 +98,13 @@ Route::group(['middleware' => 'auth:api'], function()
 
         # USUARIO
         Route::group(['prefix' => 'usuarios'], function(){
+            # Crear extension para usuario
+            Route::post('{idUsuario}/extensiones', 'UsuarioExtensionController@crearExtensionParaUsuario');
+
+            # Actualizacion de contraseña
+            Route::put('{idUsuairo}/cambioContrasenia', 'usuarioController@cambioContrasenia');
+
+            # Resource usuarios
             Route::resource('/', 'usuarioController');
         });
 

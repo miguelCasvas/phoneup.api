@@ -393,6 +393,7 @@ class ConjuntoController extends ApiController
     {
 
         $this->validarPermisos($this->modelConjunto->getTable(), 2);
+        $porPagina = $request->get('porPagina') ?: 15;
 
         $callable = function(&$key, &$vlr){
 
@@ -410,9 +411,9 @@ class ConjuntoController extends ApiController
         };
 
         $filtros = $this->generarFiltros($request->all(), '=', $callable);
-        $data = $this->modelConjunto->conjunto_ft_Rel_extensionUsuario($filtros)->get();
+        $data = $this->modelConjunto->conjunto_ft_Rel_extensionUsuario($filtros)->paginate($porPagina);
 
-        return response()->json(['data' => $data]);
+        return response()->json($data);
     }
     
 }

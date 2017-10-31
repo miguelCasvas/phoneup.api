@@ -117,4 +117,21 @@ class UsuarioExtensionController extends Controller
         $this->CreateRegisterLog($response);
         return $response;
     }
+
+    public function crearExtensionParaUsuario(Request $request, $idUsuario)
+    {
+        # Validar permisos
+        $this->validarPermisos($this->modelUsuarioExtensiones->getTable(), 1);
+
+        $this->modelUsuarioExtensiones->id_extension = $request->get('idExtension');
+        $this->modelUsuarioExtensiones->id_usuario = $idUsuario;
+        $this->modelUsuarioExtensiones->save();
+
+        $response = response()->json($this->modelUsuarioExtensiones);
+
+        # Creacion en modelo log
+        $this->CreateRegisterLog($response);
+
+        return $response;
+    }
 }

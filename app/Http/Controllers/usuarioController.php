@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Usuario\StoreRequest;
 use App\Http\Requests\Usuario\UpdateRequest;
+use App\Http\Requests\Usuario\UpdateRequestPW;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -41,7 +42,7 @@ class usuarioController extends Controller
         $this->modelUsuario->email              = $request->get('correo');
         $this->modelUsuario->id_rol             = $request->get('idRol');
         $this->modelUsuario->id_conjunto        = $request->get('idConjunto');
-        $this->modelUsuario->password           = $request->get('contrasenia');
+        $this->modelUsuario->password           = bcrypt($request->get('identificacion'));
         $this->modelUsuario->save();
 
         $response = response()->json($this->modelUsuario);
@@ -179,6 +180,23 @@ class usuarioController extends Controller
 
         return
             $this->updateModelUsuario($request, $id);
+    }
+
+    /**
+     * Actualizacion Contraseña
+     *
+     * @param Request $request
+     * @param $idUsuario
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cambioContrasenia(UpdateRequestPW $request, $idUsuario)
+    {
+
+        $this->modelUsuario = $this->modelUsuario->find($idUsuario);
+        $this->modelUsuario->password = $request->get('contrasenia');
+        $this->modelUsuario->save();
+
+        return \response()->json(['data' => $this->modelUsuario]);
     }
 
 }
