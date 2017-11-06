@@ -28,10 +28,28 @@ class ExtensionController extends Controller
     public function store(StoreRequest $request)
     {
         $this->validarPermisos($this->modelExtension->getTable(), 1);
-        $this->modelExtension->extension    = $request->get('extension');
-        $this->modelExtension->id_conjunto    = $request->get('idConjunto');
-        $this->modelExtension->id_estado    = $request->get('idEstado');
-        $this->modelExtension->save();
+
+        foreach ($request->all() as $input => $vlr) {
+            $column = snake_case($input);
+
+            if (in_array($column, $this->modelExtension->getFillable())){
+                $this->modelExtension->{$column} = $vlr;
+            }
+        }
+
+        try{
+            $this->modelExtension->save();
+        }
+        catch (\Exception $e){
+            # Control de error Duplicidad de extension por columnas
+            # extension | id_conjunto del modelo
+            if($e->getCode() == 23000){
+                $errors = ['extDupli' => 'Extension '.$request->get('extension').' asignada!'];
+                return response()->json(['error' => trans('errors.903'), 'message' => $errors], 400);
+            }
+
+            abort($e->getCode(), $e->getMessage());
+        }
 
         $response = response()->json(['data'=>$this->modelExtension]);
         # Creacion en modelo log
@@ -134,5 +152,9 @@ class ExtensionController extends Controller
         $porPagina = $request->get('porPagina') ?: 15;
         $data = $this->modelExtension->where('id_conjunto', $idConjunto)->paginate($porPagina);
         return response()->json($data);
+    }
+
+    public function almacenarExtension(Request $request)
+    {
     }
 }

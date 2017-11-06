@@ -56,6 +56,7 @@ class UbicacionCatalogoController extends Controller
         $this->validarPermisos($this->modelUbicacionCatalogo->getTable(), 1);
 
         $this->modelUbicacionCatalogo->nombre_ubicacion_catalogo = $request->get('nombreUbicacionCatalogo');
+        $this->modelUbicacionCatalogo->valor_extension = $request->get('valorExtension');
         $this->modelUbicacionCatalogo->id_catalogo = $request->get('idCatalogo');
         $this->modelUbicacionCatalogo->save();
 
@@ -85,6 +86,7 @@ class UbicacionCatalogoController extends Controller
         }
 
         $this->modelUbicacionCatalogo->nombre_ubicacion_catalogo = $request->get('nombreUbicacionCatalogo');
+        $this->modelUbicacionCatalogo->valor_extension = $request->get('valorExtension');
         $this->modelUbicacionCatalogo->id_catalogo = $request->get('idCatalogo');
         $this->modelUbicacionCatalogo->save();
 

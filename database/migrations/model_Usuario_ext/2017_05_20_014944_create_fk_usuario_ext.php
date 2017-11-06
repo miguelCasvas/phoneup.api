@@ -14,7 +14,7 @@ class CreateFkUsuarioExt extends Migration
     public function up()
     {
         Schema::table('usuario_extensiones', function (Blueprint $table) {
-            $table->foreign('id_extension','usuario_extensiones_fk_extensiones')->references('id_extension')->on('extensiones');
+            $table->foreign('id_extension','usuario_extensiones_fk_extensiones')->references('id_extension')->on('extensiones')->onDelete('cascade');
             $table->foreign('id_usuario','usuario_extensiones_fk_usuarios')->references('id_usuario')->on('usuarios');
         });
     }

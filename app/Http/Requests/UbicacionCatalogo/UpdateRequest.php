@@ -16,6 +16,7 @@ class UpdateRequest extends FormRequestToAPI
     {
         return [
             'nombreUbicacionCatalogo' => ['required'],
+            'valorExtension' => ['required', 'numeric'],
             'idCatalogo' => ['required','numeric','exists:catalogos,id_catalogo']
         ];
     }

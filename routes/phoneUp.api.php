@@ -83,17 +83,23 @@ Route::group(['middleware' => 'auth:api'], function()
     # RUTAS VERSION 1
     Route::group(['prefix' => 'v1'], function()
     {
-
-
+        #
         Route::group(['prefix' => 'conjuntos'], function(){
 
             Route::get('{idConjunto}/extensiones', 'ExtensionController@extensionesPorConjunto');
             Route::get('datosgenerales_1', 'ConjuntoController@datos1_Conjunto');
             //Route::get('datosgenerales_3', 'ConjuntoController@datos3_Conjunto');
             Route::get('datosgenerales_4', 'ConjuntoController@datos4_Conjunto');
+
+            # Catalogos por conjunto
+            Route::get('{idConjunto}/catalogos', 'CatalogoController@catalogosPorConjunto');
+
             Route::resource('/', 'ConjuntoController');
 
         });
+
+        # EXTENSIONES
+        Route::resource('extensiones', 'ExtensionController');
 
 
         # USUARIO
@@ -104,14 +110,19 @@ Route::group(['middleware' => 'auth:api'], function()
             # Actualizacion de contraseña
             Route::put('{idUsuairo}/cambioContrasenia', 'usuarioController@cambioContrasenia');
 
-            # Resource usuarios
-            Route::resource('/', 'usuarioController');
         });
+        # Resource usuarios
+        Route::resource('usuarios', 'usuarioController');
 
         # EXTENSION DE USUARIO
         Route::group(['prefix' => 'usuarioextension'], function(){
             Route::resource('/', 'UsuarioExtensionController');
         });
+
+        # UBICACION DE CATALOGO
+        Route::resource('ubicacioncatalogo', 'UbicacionCatalogoController');
+        Route::get('ubicacioncatalogofiltrado', 'UbicacionCatalogoController@listadoUbicacionCatalogoFiltrado');
+
     });
 
 

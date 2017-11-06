@@ -11,7 +11,18 @@ class Extension extends Model
 
     protected $primaryKey = 'id_extension';
 
-    protected $fillable = ['extension', 'id_conjunto', 'id_estado'];
+    protected $fillable = [
+        'extension',
+        'id_conjunto',
+        'id_ubicacion_catalogo_1',
+        'id_ubicacion_catalogo_2',
+        'id_ubicacion_catalogo_3',
+        'id_ubicacion_catalogo_4',
+        'id_ubicacion_catalogo_5',
+        'id_ubicacion_catalogo_6',
+        'id_ubicacion_catalogo_7',
+        'id_ubicacion_catalogo_8',
+        'id_estado'];
 
     /**
      * Filtrado de extensiones por estado

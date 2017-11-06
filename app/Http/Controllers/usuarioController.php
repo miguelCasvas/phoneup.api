@@ -105,6 +105,7 @@ class usuarioController extends Controller
         $this->modelUsuario->identificacion     = $request->get('identificacion');
         $this->modelUsuario->fecha_nacimiento   = $request->get('fechaNacimiento');
         $this->modelUsuario->id_rol             = $request->get('idRol');
+        $this->modelUsuario->id_conjunto        = $request->get('idConjunto');
 
         if (empty($request->get('password')) == false)
             $this->modelUsuario->password = $request->get('password');

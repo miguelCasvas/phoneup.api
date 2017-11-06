@@ -56,6 +56,7 @@ class CatalogoController extends Controller
         $this->CreateRegisterLog($response);
         return $response;
     }
+
     /**
      * Display the specified resource.
      *
@@ -118,5 +119,20 @@ class CatalogoController extends Controller
         return $response;
     }
 
+    /**
+     * @param Request $request
+     * @param $idConjunto
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function catalogosPorConjunto(Request $request, $idConjunto)
+    {
+        $porPagina = $request->get('porPagina') ?: 15;
+        $this->validarPermisos($this->modelCatalogo->getTable(), 2);
+        $data = $this->modelCatalogo->where('id_conjunto', $idConjunto)->get();
+        $response = response()->json( ['data' => $data] );
+        # Creacion en modelo log
+        $this->CreateRegisterLog($response);
+        return $response;
+    }
 
 }
