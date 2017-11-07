@@ -128,7 +128,12 @@ class CatalogoController extends Controller
     {
         $porPagina = $request->get('porPagina') ?: 15;
         $this->validarPermisos($this->modelCatalogo->getTable(), 2);
-        $data = $this->modelCatalogo->where('id_conjunto', $idConjunto)->get();
+        $data =
+            $this->modelCatalogo
+                ->catalogosPorConjunto()
+                ->where('catalogos.id_conjunto', $idConjunto)
+                ->get();
+
         $response = response()->json( ['data' => $data] );
         # Creacion en modelo log
         $this->CreateRegisterLog($response);
