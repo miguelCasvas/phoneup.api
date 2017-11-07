@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth:api'], function()
     # RUTAS VERSION 1
     Route::group(['prefix' => 'v1'], function()
     {
-        #
+        # CONJUNTOS
         Route::group(['prefix' => 'conjuntos'], function(){
 
             Route::get('{idConjunto}/extensiones', 'ExtensionController@extensionesPorConjunto');
@@ -98,9 +98,14 @@ Route::group(['middleware' => 'auth:api'], function()
 
         });
 
+        # CATALOGO
+        Route::group(['prefix' => 'catalogos'], function(){
+            Route::post('orden', 'CatalogoController@generarOrden');
+        });
+        Route::resource('catalogos', 'CatalogoController');
+
         # EXTENSIONES
         Route::resource('extensiones', 'ExtensionController');
-
 
         # USUARIO
         Route::group(['prefix' => 'usuarios'], function(){
@@ -111,6 +116,7 @@ Route::group(['middleware' => 'auth:api'], function()
             Route::put('{idUsuairo}/cambioContrasenia', 'usuarioController@cambioContrasenia');
 
         });
+
         # Resource usuarios
         Route::resource('usuarios', 'usuarioController');
 

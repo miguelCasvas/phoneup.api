@@ -10,7 +10,7 @@ class Catalogo extends Model
 
     protected $primaryKey = "id_catalogo";
 
-    protected $fillable = ["nombre_Catalogo", "id_conjunto"];
+    protected $fillable = ["nombre_Catalogo", "id_conjunto", "orden"];
 
     /**
      * Realiza busqueda de los catalogos creados por cada conjunto
@@ -24,7 +24,7 @@ class Catalogo extends Model
                 ->select('catalogos.*', 'conjuntos.nombre_conjunto')
                 ->join('conjuntos', 'catalogos.id_conjunto', '=', 'conjuntos.id_conjunto')
                 ->orderBy('conjuntos.id_conjunto', 'asc')
-                ->orderBy('catalogos.nombre_catalogo', 'asc');
+                ->orderBy('catalogos.orden', 'asc');
 
         return $query;
     }

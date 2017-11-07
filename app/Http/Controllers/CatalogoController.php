@@ -135,4 +135,23 @@ class CatalogoController extends Controller
         return $response;
     }
 
+    /**
+     * Actualización del orden del catalogo
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generarOrden(Request $request)
+    {
+        $ordenCatalogo = $request->get('ordenCatalogo');
+
+        foreach ($ordenCatalogo as $idCatalgo => $orden) {
+            $this->modelCatalogo = $this->modelCatalogo->find($idCatalgo);
+            $this->modelCatalogo->orden = $orden;
+            $this->modelCatalogo->save();
+        }
+
+        return response()->json(['data' => true]);
+    }
 }
