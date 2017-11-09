@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use App\Events\CreacionExtension;
 use Illuminate\Database\Eloquent\Model;
 
 class Extension extends Model
@@ -23,6 +24,10 @@ class Extension extends Model
         'id_ubicacion_catalogo_7',
         'id_ubicacion_catalogo_8',
         'id_estado'];
+
+    protected $events = [
+        'created' => CreacionExtension::class,
+    ];
 
     /**
      * Filtrado de extensiones por estado
