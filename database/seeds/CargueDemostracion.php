@@ -34,7 +34,7 @@ class CargueDemostracion extends Seeder
 
         # CREACION DE 20 CONJUNTOS
         factory(App\Models\Conjunto::class, 1)->create()->each(function($u) use(&$extension){
-
+            /*
             $datos['extension'] = $extension;
             $datos['id_conjunto'] = $u->id_conjunto;
 
@@ -59,13 +59,13 @@ class CargueDemostracion extends Seeder
             factory(App\Models\CanalComunicacion::class, 1)->states('mov')->create($datos);
             factory(App\Models\CanalComunicacion::class, 1)->states('what')->create($datos);
             factory(App\Models\CanalComunicacion::class, 1)->states('correo')->create($datos);
-
+            */
         });
 
         echo "CARGUE DE CONJUNTOS FINALIZADA\n";
-        echo "CARGUE DE EXTENSIONES FINALIZADA\n";
-        echo "CARGUE DE CATALOGOS FINALIZADA\n";
-        echo "CARGUE DE CANALES DE COMUNICACION FINALIZADA\n";
+        //echo "CARGUE DE EXTENSIONES FINALIZADA\n";
+        //echo "CARGUE DE CATALOGOS FINALIZADA\n";
+        //echo "CARGUE DE CANALES DE COMUNICACION FINALIZADA\n";
 
     }
 }
