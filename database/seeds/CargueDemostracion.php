@@ -33,7 +33,7 @@ class CargueDemostracion extends Seeder
         $extension = 1100;
 
         # CREACION DE 20 CONJUNTOS
-        factory(App\Models\Conjunto::class, 20)->create()->each(function($u) use(&$extension){
+        factory(App\Models\Conjunto::class, 1)->create()->each(function($u) use(&$extension){
 
             $datos['extension'] = $extension;
             $datos['id_conjunto'] = $u->id_conjunto;
