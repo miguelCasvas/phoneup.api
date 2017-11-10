@@ -18,3 +18,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('demo', function(){
+
+    dd(bcrypt(12345678));
+    $obj = new \App\models\Extension();
+
+   $newRequest = [
+       'extension' => '10101',
+       'id_conjunto' => 1,
+       'id_ubicacion_catalogo_1' => 1,
+       'id_ubicacion_catalogo_2' => 2,
+       'id_estado' => 1
+   ];
+    $obj->create($newRequest);
+
+});

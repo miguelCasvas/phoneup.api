@@ -24,7 +24,7 @@ class IaxBuddies extends Model
         'allow','ipaddr','port','regseconds',
     ];
 
-    public static function insercionExtension(array $params)
+    public function insercionExtension(array $params)
     {
 
         $parametrosDeInsercion = [
@@ -32,29 +32,17 @@ class IaxBuddies extends Model
             'username'      => null,
             'type'          => 'friend',
             'secret'        => '12345678+',
-            'md5secret'     => null,
-            'dbsecret'      => null,
-            'notransfer'    => null,
-            'inkeys'        => null
-            ,'outkey'       => null,
-            'auth'          => null,
-            'accountcode'   => null,
-            'amaflags'      => null,
-            'callerid'      => null,
             'context'       => 'phoneup-iax',
-            'defaultip'     => null,
             'host'          => 'dynamic',
-            'language'      => null,
-            'mailbox'       =>  null,
-            'deny'          => null,
-            'permit'        => null,
-            'qualify'       => null,
-            'disallow'      => null,
-            'allow'         => null,
             'ipaddr'        => '127.0.0.1',
             'port'          => '4569',
             'regseconds'    => '1096954152',
         ];
 
+        $parametrosFinales = array_merge($parametrosDeInsercion, $params);
+
+        $this->create($parametrosFinales)->toSql();
+
+        return $this;
     }
 }

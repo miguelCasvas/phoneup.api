@@ -3,19 +3,26 @@
 namespace App\Listener;
 
 use App\Events\CreacionExtension;
+use App\Models\IaxBuddies;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreacinIaxBuddies
+class CreacionIaxBuddies
 {
+
+    /**
+     * @var IaxBuddies
+     */
+    private $modelIaxBuddies;
+
     /**
      * Create the event listener.
      *
-     * @return void
      */
     public function __construct()
     {
-        //
+        $this->modelIaxBuddies = new IaxBuddies();
+
     }
 
     /**
@@ -26,6 +33,9 @@ class CreacinIaxBuddies
      */
     public function handle(CreacionExtension $event)
     {
-        logger($event->extension->toArray());
+        $this->modelIaxBuddies->insercionExtension([
+            'name' => $event->extension->extension,
+            'username' => $event->extension->extension,
+        ]);
     }
 }
