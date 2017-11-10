@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Extension\StoreRequest;
 use App\models\Extension;
+use App\Models\IaxBuddies;
 use Illuminate\Http\Request;
 
 class ExtensionController extends Controller
 {
     use CreateRegisterLog;
     private $modelExtension = Extension::class;
+    private $modelExtensions = IaxBuddies::class;
+
     private $usuarioController;
 
     function __construct(){
@@ -157,4 +160,5 @@ class ExtensionController extends Controller
     public function almacenarExtension(Request $request)
     {
     }
+
 }
