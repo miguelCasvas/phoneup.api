@@ -45,7 +45,7 @@ class IaxBuddies extends Model
             'defaultip'     => null,
             'host'          => 'dynamic',
             'language'      => null,
-            'mailbox'       =>  null,
+            'mailbox'       => null,
             'deny'          => null,
             'permit'        => null,
             'qualify'       => null,
