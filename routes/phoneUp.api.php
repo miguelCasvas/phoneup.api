@@ -94,6 +94,9 @@ Route::group(['middleware' => 'auth:api'], function()
             # Catalogos por conjunto
             Route::get('{idConjunto}/catalogos', 'CatalogoController@catalogosPorConjunto');
 
+            # Canales de comunicacion por conjunto
+            Route::get('canalesComunicacion', 'CanalComunicacionController@canalesPorConjunto');
+
             Route::resource('/', 'ConjuntoController');
 
         });
@@ -103,6 +106,12 @@ Route::group(['middleware' => 'auth:api'], function()
             Route::post('orden', 'CatalogoController@generarOrden');
         });
         Route::resource('catalogos', 'CatalogoController');
+
+        # TIPO SALIDA
+        Route::group(['prefix' => 'tiposalida'], function(){
+            Route::get('listado', 'TipoSalidaController@listadoRelacionado_ft_canal');
+        });
+        Route::resource('tiposalida','TipoSalidaController');
 
         # EXTENSIONES
         Route::resource('extensiones', 'ExtensionController');

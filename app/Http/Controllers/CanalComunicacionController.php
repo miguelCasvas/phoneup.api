@@ -139,6 +139,7 @@ class CanalComunicacionController extends Controller
             if ($key == 'id_conjunto')
                 $key = 'conjuntos.' . $key;
         };
+
         $filtros = $this->generarFiltros($request->all(), '=', $callable);
 
         $data = $this->modelCanalComunicacion->canalesPorConjunto($filtros)->get()->toArray();

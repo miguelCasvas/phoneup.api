@@ -32,8 +32,10 @@ class TipoSalidaController extends Controller
         $this->validarPermisos($this->modelTiposSalidas->getTable(), 1);
 
         $this->modelTiposSalidas->nombre_tipo_salida    = $request->get('nombreTipoSalida');
-        $this->modelTiposSalidas->id_marcado    = $request->get('idMarcado');
-        $this->modelTiposSalidas->id_notificacion    = $request->get('idNotificacion');
+        $this->modelTiposSalidas->metodo                = $request->get('metodo');
+        $this->modelTiposSalidas->metodo_params         = $request->get('metodoParams');
+        $this->modelTiposSalidas->id_canal              = $request->get('idCanal');
+        $this->modelTiposSalidas->id_notificacion       = $request->get('idNotificacion');
         $this->modelTiposSalidas->save();
 
         $response = response()->json($this->modelTiposSalidas);
@@ -136,5 +138,12 @@ class TipoSalidaController extends Controller
 
         $this->CreateRegisterLog($response);
         return $response;
+    }
+
+    public function listadoRelacionado_ft_canal()
+    {
+        $data = $this->modelTiposSalidas->listadoTposSalidaRelacionadosACanal();
+
+        return response()->json(['data' => $data->get()->toArray()]);
     }
 }

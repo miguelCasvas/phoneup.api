@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\Events\CreacionExtension;
+use App\Events\EliminacionExtension;
 use Illuminate\Database\Eloquent\Model;
 
 class Extension extends Model
@@ -23,10 +24,12 @@ class Extension extends Model
         'id_ubicacion_catalogo_6',
         'id_ubicacion_catalogo_7',
         'id_ubicacion_catalogo_8',
-        'id_estado'];
+        'id_estado',
+    ];
 
     protected $events = [
         'created' => CreacionExtension::class,
+        'deleting' => EliminacionExtension::class,
     ];
 
     /**

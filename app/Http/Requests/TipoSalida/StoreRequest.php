@@ -16,8 +16,8 @@ class StoreRequest extends FormRequestToAPI
     {
         return [
             'nombreTipoSalida' => ['required'],
-            'idMarcado' => ['required', 'numeric', 'exists:marcados,id_marcado'],
-            'idNotificacion' => ['required', 'numeric', 'exists:notificaciones,id_notificacion'],
+            'idCanal' => ['required', 'numeric', 'exists:canal_comunicaciones,id_canal'],
+            //'idNotificacion' => ['required', 'numeric', 'exists:notificaciones,id_notificacion'],
         ];
     }
 }

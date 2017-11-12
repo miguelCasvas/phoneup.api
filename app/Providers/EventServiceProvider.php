@@ -15,6 +15,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\CreacionExtension' => [
             'App\Listener\CreacionIaxBuddies'
+        ],
+
+        'App\Events\EliminacionExtension' => [
+            'App\Listener\EliminarIaxBuddies'
         ]
     ];
 
