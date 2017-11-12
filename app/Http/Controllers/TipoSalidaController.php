@@ -146,4 +146,33 @@ class TipoSalidaController extends Controller
 
         return response()->json(['data' => $data->get()->toArray()]);
     }
+
+    /**
+     * Genera la busqueda de todos los tipos de salida con relacion:
+     * * Canal de comunicion --> ft --> conjunto
+     */
+    public function listadoRelacionado_ft_Conjunto(Request $request)
+    {
+
+        $callable = function(&$key, &$vlr){
+
+            # Si el parametro es id_conjunto cambia la invocacion
+            # de esta columna añadiendo la tabla origen para no crear
+            # ambiguedad
+            if ($key == 'id_conjunto')
+                $key = 'conjuntos.' . $key;
+
+            if ($key == 'id_canal')
+                $key = 'canal_comunicaciones.' . $key;
+
+            if ($key == 'id_tipo_salida')
+                $key = 'tipo_salidas.' . $key;
+
+        };
+
+        $filtros = $this->generarFiltros($request->all(), '=', $callable);
+        $data = $this->modelTiposSalidas->listadoTposSalidaRelacionadosCanal_Conjuntos($filtros);
+        return response()->json(['data' => $data->get()->toArray()]);
+
+    }
 }

@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
             # Canales de comunicacion por conjunto
             Route::get('canalesComunicacion', 'CanalComunicacionController@canalesPorConjunto');
+            Route::get('canalesComunicacion/tipoSalida', 'TipoSalidaController@listadoRelacionado_ft_Conjunto');
 
             Route::resource('/', 'ConjuntoController');
 
