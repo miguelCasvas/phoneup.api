@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Traits\CreateRegisterLog;
 use App\Http\Requests\Extension\StoreRequest;
 use App\models\Extension;
+use App\Models\Extensions_Asterisk;
 use App\Models\IaxBuddies;
 use Illuminate\Http\Request;
 
@@ -12,21 +13,21 @@ class ExtensionController extends Controller
 {
     use CreateRegisterLog;
     private $modelExtension = Extension::class;
-    private $modelExtensions = IaxBuddies::class;
-
+    private $modelExtensions_Asterisk = Extensions_Asterisk::class;
     private $usuarioController;
 
     function __construct(){
 
         $this->modelExtension  = new Extension();
         $this->usuarioController = new usuarioController();
+        $this->modelExtensions_Asterisk = new Extensions_Asterisk();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRequest $request)
     {
@@ -157,8 +158,46 @@ class ExtensionController extends Controller
         return response()->json($data);
     }
 
-    public function almacenarExtension(Request $request)
+    /**
+     * Creación del plan de marcado por extension
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function crearPlanDeMarcado(Request $request)
     {
+
+        $this->modelExtensions_Asterisk =
+            $this->modelExtensions_Asterisk->create([
+                'context' => $request->get('context'),
+                'exten' => $request->get('exten'),
+                'app' => $request->get('app'),
+                'appdata' => $request->get('appdata'),
+            ]);
+
+        return response()->json(['data' => $this->modelExtensions_Asterisk->toArray()]);
+
     }
 
+    public function planDeMarcadoPorExtension(Request $request)
+    {
+        $data =
+            $this
+                ->modelExtensions_Asterisk
+                ->where('extensions.exten', $request->get('extension'))
+                ->orderBy('priority')
+                ->get();
+
+        return response()->json(['data' => $data]);
+    }
+
+    public function generarOrdenMarcado(Request $request, $idMarcado)
+    {
+        $this->modelExtensions_Asterisk =
+            $this->modelExtensions_Asterisk->find($idMarcado);
+
+        $this->modelExtensions_Asterisk->priority = $request->get('orden');
+        $this->modelExtensions_Asterisk->save();
+
+    }
 }

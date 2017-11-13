@@ -115,6 +115,18 @@ Route::group(['middleware' => 'auth:api'], function()
         Route::resource('tiposalida','TipoSalidaController');
 
         # EXTENSIONES
+        Route::group(['prefix' => 'extensiones'], function(){
+
+            Route::group(['prefix' => 'planDeMarcado'], function(){
+
+                Route::post('', 'ExtensionController@crearPlanDeMarcado');
+                Route::get('', 'ExtensionController@planDeMarcadoPorExtension');
+                Route::post('{idMarcado}/ordenar', 'ExtensionController@generarOrdenMarcado');
+
+
+            });
+
+        });
         Route::resource('extensiones', 'ExtensionController');
 
         # USUARIO
@@ -138,9 +150,6 @@ Route::group(['middleware' => 'auth:api'], function()
         # UBICACION DE CATALOGO
         Route::resource('ubicacioncatalogo', 'UbicacionCatalogoController');
         Route::get('ubicacioncatalogofiltrado', 'UbicacionCatalogoController@listadoUbicacionCatalogoFiltrado');
-
-        # EXTENSIONES
-        Route::resource('extensiones', 'ExtensionController');
 
     });
 

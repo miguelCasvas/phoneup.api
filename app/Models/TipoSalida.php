@@ -26,7 +26,8 @@ class TipoSalida extends Model
                     'canal_comunicaciones.canal',
                     'tipo_salidas.nombre_tipo_salida',
                     'tipo_salidas.metodo',
-                    'tipo_salidas.metodo_params'
+                    'tipo_salidas.metodo_params',
+                    'tipo_salidas.comentarios'
                 )
                 ->join(
                     'canal_comunicaciones',
