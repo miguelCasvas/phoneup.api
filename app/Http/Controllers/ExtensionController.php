@@ -173,6 +173,7 @@ class ExtensionController extends Controller
                 'exten' => $request->get('exten'),
                 'app' => $request->get('app'),
                 'appdata' => $request->get('appdata'),
+                'data_visual' => $request->get('dataVisual'),
             ]);
 
         return response()->json(['data' => $this->modelExtensions_Asterisk->toArray()]);
@@ -191,6 +192,19 @@ class ExtensionController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    /**
+     * Eliminar marcado relacionado a la extension
+     *
+     * @param Request $request
+     * @param $idMarcado
+     */
+    public function eliminarMarcado(Request $request, $idMarcado)
+    {
+        $this->modelExtensions_Asterisk =
+            $this->modelExtensions_Asterisk->find($idMarcado);
+
+        $this->modelExtensions_Asterisk->delete();
+    }
     public function generarOrdenMarcado(Request $request, $idMarcado)
     {
         $this->modelExtensions_Asterisk =

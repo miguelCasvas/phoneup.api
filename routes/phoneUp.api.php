@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
                 Route::post('', 'ExtensionController@crearPlanDeMarcado');
                 Route::get('', 'ExtensionController@planDeMarcadoPorExtension');
+                Route::delete('{idMarcado}', 'ExtensionController@eliminarMarcado');
                 Route::post('{idMarcado}/ordenar', 'ExtensionController@generarOrdenMarcado');
 
 

@@ -36,6 +36,7 @@ class TipoSalidaController extends Controller
         $this->modelTiposSalidas->metodo_params         = $request->get('metodoParams');
         $this->modelTiposSalidas->id_canal              = $request->get('idCanal');
         $this->modelTiposSalidas->id_notificacion       = $request->get('idNotificacion');
+        $this->modelTiposSalidas->comentarios           = $request->get('comentarios');
         $this->modelTiposSalidas->save();
 
         $response = response()->json($this->modelTiposSalidas);

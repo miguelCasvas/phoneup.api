@@ -184,7 +184,7 @@ class ConjuntoController extends ApiController
      */
     public function index(Request $request)
     {
-        //$this->validarPermisos($this->modelConjunto->getTable(), 2);
+        $this->validarPermisos($this->modelConjunto->getTable(), 2);
         $porPagina = $request->get('porPagina') ?: 15;
         $data = $this->modelConjunto->paginate($porPagina);
         return response()->json($data);

@@ -18,7 +18,8 @@ class Extensions_Asterisk extends Model
         'exten',
         'priority',
         'app',
-        'appdata'
+        'appdata',
+        'data_visual'
     ];
 
     /**
