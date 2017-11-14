@@ -50,7 +50,7 @@ class Usuario extends Authenticatable
             if ($id != null)
                 $condiciones[1] = ['id_usuario','=',$id];
 
-            $dataR = Usuario::where($condiciones);
+            $dataR = Usuario::where($condiciones)->get();
         }
 
         return $dataR;
@@ -167,7 +167,7 @@ class Usuario extends Authenticatable
         #Conjuntos
         $infoUsuario->put('nombre_conjunto', $conjunto->first()->nombre_conjunto);
         $infoUsuario->put('direccion', $conjunto->first()->direccion);
-        $infoUsuario->put('telefono', $conjunto->first()->direccion);
+        $infoUsuario->put('telefono', $conjunto->first()->telefono);
 
 
         # Extensiones

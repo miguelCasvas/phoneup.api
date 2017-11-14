@@ -91,8 +91,8 @@ class ConjuntoController extends ApiController
      */
     public function show($id)
     {
-        //
-        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+
+        //$this->validarPermisos($this->modelConjunto->getTable(), 2);
         $data = $this->modelConjunto->find($id);
         $response = response()->json([ 'data'=> $data ]);
         # Creacion en modelo log
@@ -184,7 +184,7 @@ class ConjuntoController extends ApiController
      */
     public function index(Request $request)
     {
-        $this->validarPermisos($this->modelConjunto->getTable(), 2);
+        //$this->validarPermisos($this->modelConjunto->getTable(), 2);
         $porPagina = $request->get('porPagina') ?: 15;
         $data = $this->modelConjunto->paginate($porPagina);
         return response()->json($data);
@@ -415,5 +415,5 @@ class ConjuntoController extends ApiController
 
         return response()->json($data);
     }
-    
+
 }
